@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback & Suggestions - HunarWali</title>
+    <link rel="stylesheet" href="feedback-style.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="nav_logo">
+                <div class="logo">
+                    <a href="#">
+                        <img src="image-removebg-preview.png" alt="Logo">
+                    </a>
+                </div>
+            </div>
+            <ul class="nav-content">
+                <li><a href="/Home page/indes.html">HOME</a></li>
+                <li><a href="/Services/services.html">SERVICES</a></li>
+                <li><a href="/Hire Freelancers/hire.html">HIRE</a></li>
+                <li><a href="/registration/registration.html">REGISTER</a></li>
+                <li><a href="/Login/index.html">LOGIN</a></li>
+            </ul>
+            <a href="/Contact us/contact.html"> <button class="nav-content" id="contact-btn"> CONTACT US!</button></a>
+        </div>
+    </header>
+
+    <!-- Feedback Form Section -->
+    <div class="feedback-container">
+        <header>
+            <h1>Employee Feedback & Suggestions</h1>
+            <p>We value your feedback! Please provide any suggestions or improvements you'd like to see in the platform.
+            </p>
+        </header>
+
+        <form class="feedback-form">
+            <!-- Employee Information -->
+            <fieldset>
+                <legend>Employee Information</legend>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required><br>
+
+                <label for="employee-id">Employee ID:</label>
+                <input type="text" id="employee-id" name="employee-id" required><br>
+
+                <label for="department">Department:</label>
+                <input type="text" id="department" name="department" required>
+            </fieldset>
+
+            <!-- Feedback and Suggestions -->
+            <fieldset>
+                <legend>Feedback and Suggestions</legend>
+                <label for="issue">Describe the Issue/Process You Wish to Improve:</label>
+                <textarea id="issue" name="issue" rows="4" required></textarea><br>
+
+                <label for="suggestions">Your Feedback or Suggested Changes:</label>
+                <textarea id="suggestions" name="suggestions" rows="4" required></textarea><br>
+
+                <label for="resources">Resources Needed for Implementation (if any):</label>
+                <textarea id="resources" name="resources" rows="4"></textarea>
+            </fieldset>
+
+            <!-- Impact of Suggestion -->
+            <fieldset>
+                <legend>Impact of Your Suggestion</legend>
+                <label for="work-environment">Improved Work Environment:</label>
+                <input type="checkbox" id="work-environment" name="work-environment"><br>
+
+                <label for="team-collaboration">Better Team Collaboration:</label>
+                <input type="checkbox" id="team-collaboration" name="team-collaboration"><br>
+
+                <label for="other-benefits">Other Benefits:</label>
+                <input type="text" id="other-benefits" name="other-benefits">
+            </fieldset>
+
+            <!-- Employee Signature -->
+            <fieldset>
+                <legend>Employee Signature</legend>
+                <label for="signature">Signature:</label>
+                <input type="text" id="signature" name="signature" required><br>
+
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+            </fieldset>
+
+            <!-- Supervisor Acknowledgment -->
+            <fieldset>
+                <legend>Supervisor Acknowledgment</legend>
+                <label for="review-completed">Review Completed:</label>
+                <input type="checkbox" id="review-completed" name="review-completed"><br>
+
+                <label for="comments">Supervisor Comments:</label>
+                <textarea id="comments" name="comments" rows="4"></textarea>
+            </fieldset>
+
+            <!-- Submit Button -->
+            <div class="form-footer">
+                <button type="submit">Submit Feedback</button>
+            </div>
+        </form>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-section">
+            <div class="footer-links">
+                <h3>PRODUCT</h3>
+                <ul>
+                    <li><a href="#">Home</a></li><br>
+                    <li><a href="#">Services</a></li><br>
+                    <li><a href="#">About</a></li><br>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>SUPPORT</h3>
+                <ul>
+                    <li><a href="#">How It Works</a></li><br>
+                    <li><a href="#">Trust and Safety</a></li><br>
+                    <li><a href="#">Help Centre</a></li><br>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>RESOURCES</h3>
+                <ul>
+                    <li><a href="#">Customer Sales</a></li><br>
+                    <li><a href="#">Business Cost</a></li><br>
+                    <li><a href="#">Help Centre</a></li><br>
+                </ul>
+            </div>
+            <div class="footer-brand">
+                <h3>HUNARWALI</h3>
+                <p>Lorem Ipsum Content for Address</p>
+                <div class="social-icons">
+                    <a href="#" class="fa fa-facebook"></a>
+                    <a href="#" class="fa fa-twitter"></a>
+                    <a href="#" class="fa fa-instagram"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright &copy; 2024 Hunarwali</p>
+        </div>
+    </footer>
+</body>
+
+</html>

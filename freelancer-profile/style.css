@@ -1,0 +1,225 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #F8F8E6;
+    padding: 20px;
+}
+
+.tab-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    transition: color 0.3s ease-in-out;
+}
+
+.tab-circle {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #ccc;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.tab-button.active {
+    color: #800000;
+}
+
+.tab-button.active .tab-circle {
+    background-color: #800000;
+}
+
+.form-container {
+    width: 600px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.name-container {
+    display: flex;
+    gap: 10px;
+}
+
+.name-container input {
+    flex: 1;
+}
+
+.profile-picture-container {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.profile-picture {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #ddd;
+}
+
+.continue-button {
+    background-color: #800000;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.continue-button:hover {
+    background-color: #660000;
+}
+
+.form-container {
+    width: 650px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(168, 37, 37, 0.1);
+    text-align: left;
+    position: relative;
+}
+
+.form-title {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.form-label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+.private-text {
+    font-size: 12px;
+    font-weight: bold;
+    color: grey;
+    margin-left: 10px;
+}
+
+.name-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.name-container input {
+    flex: 1;
+    border: 2px solid #DDAA00;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 2px solid #DDAA00;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+
+.profile-picture-container {
+    text-align: center;
+}
+
+.profile-picture {
+    width: 60px;
+    height: 60px;
+}
+
+.continue-button {
+    background-color: #C00000;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 150px;
+    font-weight: bold;
+}
+
+.corner-image {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.small-corner-image {
+    width: 300px;
+    height: 300px;
+}
+/* Remove default underline and color change for links inside the button */
+.tab-button a {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit color from the parent element */
+}
+
+
+.form-label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+#profession-container {
+    margin-bottom: 10px;
+}
+
+.profession-item {
+    margin-bottom: 10px;
+}
+
+.profession-select {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #DDAA00;
+    border-radius: 5px;
+}
+.submitting {
+    animation: fadeOut 2s ease-out;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}

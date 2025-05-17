@@ -1,0 +1,181 @@
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    
+} 
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fdf1ef;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Form Container */
+.form-container {
+    width: 600px;
+    background-color: #fbdfc3;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Headings */
+h1{
+    color: #8a3342;
+    margin-bottom: 10px;
+}
+
+/* Labels */
+labels .personel {
+    display: block;
+    font-weight: bold;
+    margin: 10px 0 5px;
+    color: #8a3342;
+}
+
+/* Input Fields */
+input, textarea .personel{
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 2px solid #8a3342;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Input Sections */
+.name-section, .contact-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.name-section div, .contact-section div {
+    width: 48%;
+}
+
+
+
+
+
+.rating { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    text-align: center; 
+}
+
+.container { 
+    width: 400px; 
+    background: #e96958 ; 
+    padding: 20px 30px; 
+    border: 1px solid #444; 
+    border-radius: 8px; 
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+}
+
+.star-widget input {
+    display: none;
+}
+
+.star-widget label {
+    font-size: 40px;
+    color: #444;
+    padding: 10px;
+    float: right;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+/* Highlight stars on hover */
+.star-widget label:hover, 
+.star-widget label:hover ~ label { 
+    color: #fd4; 
+} 
+
+/* Keep selected stars highlighted */
+.star-widget input:checked ~ label { 
+    color: #fd4; 
+}
+
+/* Special effect for 5-star rating */
+#rate-5:checked ~ label { 
+    color: #fe7; 
+    text-shadow: 0 0 20px #952; 
+}
+
+/* Dynamic feedback messages */
+#rate-1:checked ~ form header:before { content: "Frustrates me so much 😡"; }
+#rate-2:checked ~ form header:before { content: "Bothers me 😒"; }
+#rate-3:checked ~ form header:before { content: "Awesome 😄"; }
+#rate-4:checked ~ form header:before { content: "Just like it 😎"; }
+#rate-5:checked ~ form header:before { content: "Love it 😍"; }
+
+.container form {
+    display: none;
+    margin-top: 20px;
+}
+
+/* Show form when a star is selected */
+.star-widget input:checked ~ form {
+    display: block;
+}
+
+/* Styling the form header */
+form header { 
+    width: 100%; 
+    font-size: 20px; 
+    color: #762431; 
+    font-weight: 500; 
+    margin-bottom: 20px; 
+    transition: all 0.2s ease;
+}
+
+/* Textarea Styling */
+form .textarea { 
+    height: 100px; 
+    width: 100%; 
+    overflow: hidden; 
+} 
+
+form .textarea textarea { 
+    height: 100%; 
+    width: 100%; 
+    outline: none; 
+    color: #eee;
+    border: 1px solid #333; 
+    background:#EDF4C2; 
+    padding: 10px; 
+    font-size: 17px;
+    resize: none;
+}
+
+/* Button Styling */
+form .btn { 
+    height: 45px; 
+    width: 100%; 
+    margin-top: 15px; 
+} 
+
+form .btn button { 
+    height: 100%; 
+    width: 100%; 
+    border: 1px solid #444; 
+    outline: none; 
+    background:#EDF4C2; 
+    color: #999; 
+    font-size: 17px; 
+    font-weight: 500; 
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+form .btn button:hover {
+    background: #1b1b1b;
+}

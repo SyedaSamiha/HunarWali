@@ -1,0 +1,77 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Full-page Styling with Border */
+body {
+    height: 100%;  /* Allow body to fill the height */
+}
+
+/* Hero page section */
+
+
+/* Container for the services */
+.service-container {
+    
+    height: 80vh;
+    margin: 0
+}
+
+h2 {
+    font-size: 45px; /* Increased heading size */
+    margin-bottom: 20px;
+    color: #8a3342;
+    text-align: center;
+}
+
+/* Styling for the service cards */
+.service-cards {
+    display: flex;
+    justify-content: center; /* Centers the boxes */
+    gap: 15px; /* Reduced the space between the boxes */
+    margin-top:10;
+}
+
+.service-card {
+    background-color: #ebdaa8;
+    padding: 50px; /* Increased padding for larger boxes */
+    width: 350px; /* Increased width for larger boxes */
+    height: 350px; /* Increased height for larger boxes */
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    color: #8a3342;
+    text-decoration: none;
+}
+
+.service-card .icon {
+    font-size: 60px;
+    color: #8a3342;
+    margin-bottom: 15px;
+}
+
+/* Hover effect for the service cards */
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.service-card h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.service-card p {
+    font-size: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .service-cards {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+

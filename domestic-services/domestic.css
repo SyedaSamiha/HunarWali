@@ -1,0 +1,196 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    min-height: 100vh; /* Ensures the body takes up the full height */
+    display: flex;
+    flex-direction: column; /* Flexbox ensures the footer stays at the bottom */
+}
+
+/* Navbar Styling */
+.navbar {
+    height: 80px;
+    width: 100%;
+    background-color: #fde1c1;
+    color: #e96958;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    position: sticky;
+    top: 0; /* Ensures the navbar sticks at the top of the page */
+    z-index: 1000; /* Ensures the navbar stays above other elements while scrolling */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds a shadow for better visibility */
+    transition: background-color 0.3s; /* Optional: Transition effect for background color change */
+}
+
+.nav_logo {
+    height: 50px;
+    width: 80px;
+}
+
+.logo img {
+    height: 50px;
+    width: 100%;
+    object-fit: contain;
+}
+
+li {
+    list-style-type: none;
+    display: inline-block;
+}
+
+a {
+    text-decoration: none;
+    color: #e96958;
+    font-size: 20px;
+}
+
+.nav-content {
+    display: flex;
+    gap: 20px;
+    font-weight: 600;
+}
+
+.navbar .contact-btn {
+    margin-left: auto;
+}
+#contact-btn {
+    padding: 10px 15px;
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color:#e96958;
+    background-color: #f0cca3; /* Button background color */
+    border: 2px solid #f5bb79; /* Border color */
+    border-radius: 30px; /* Rounded corners */
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+}
+/* Hover effect for the button */
+#contact-btn:hover {
+    background-color: #e8ae6c; /* Button color on hover */
+    color: #e3321a; /* Text color on hover */
+    border-color: #f09a38; /* Border color on hover */
+}
+h2 {
+    font-size: 45px; /* Increased heading size */
+    margin-bottom: 20px;
+    color: #8a3342;
+    text-align: center;
+}
+
+
+/* Updated styling for the service cards to fit 4 boxes in one row and 3 in another */
+.service-cards {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Space between the boxes */
+    flex-wrap: wrap; /* Allow wrapping of items to the next line */
+    margin-top: 10px;
+}
+
+/* Styling for the service cards */
+.service-card {
+    background-color: #eabd8c;
+    padding: 50px; /* Increased padding for larger boxes */
+    width: 300px; /* Adjusted width for 4 boxes in one row */
+    height: 350px; /* Increased height for larger boxes */
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    color: #8a3342;
+    text-decoration: none;
+    margin-bottom: 20px; /* Space between rows */
+}
+
+/* Hover effect for the service cards */
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Adjust font sizes for headings and paragraphs */
+.service-card h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.service-card p {
+    font-size: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .service-cards {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+
+
+
+
+/* Footer Styling */
+.footer {
+    background-color: #e6dca9;
+    color: #406286;
+    padding: 40px 20px;
+    font-size: 14px;
+    margin-top: auto; /* Ensures it stays at the bottom of the page */
+}
+
+.footer-section {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.footer-links h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.footer-links ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 8px;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #406286;
+}
+
+.footer-brand h3 {
+    font-size: 18px;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 10px;
+    font-size: 12px;
+}
+
+/* Adjusting layout for smaller screens */
+@media (max-width: 768px) {
+    .services {
+        flex-direction: column; /* Stack the service cards */
+    }
+
+    .service-card {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}

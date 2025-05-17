@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbar {
+    height: 80px;
+    width: 100%;
+    background-color: #ffffff;
+    color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow);
+}
+
+.nav_logo {
+    height: 50px;
+    width: 80px;
+}
+
+.logo img {
+    height: 50px;
+    width: 100%;
+    object-fit: contain;
+}
+
+li {
+    list-style-type: none;
+    display: inline-block;
+}
+
+.nav-content {
+    display: flex;
+    gap: 2rem;
+    font-weight: 500;
+}
+
+.nav-content a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    transition: var(--transition);
+    position: relative;
+}
+
+.nav-content a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.nav-content a:hover::after,
+.nav-content a.active::after {
+    width: 100%;
+}
+
+.navbar .contact-btn {
+    margin-left: auto;
+}
+#contact-btn {
+    padding: 10px 15px;
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color:#e96958;
+    background-color: #fdf1ef; /* Button background color */
+    border: 2px solid #fdf1ef; /* Border color */
+    border-radius: 30px; /* Rounded corners */
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+}
+/* Hover effect for the button */
+#contact-btn:hover {
+    background-color: #2c3e50; /* Button color on hover */
+    color: #ffffff; /* Text color on hover */
+    border-color: #f09a38; /* Border color on hover */
+}
+
+a {
+    text-decoration: none;
+}

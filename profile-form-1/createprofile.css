@@ -1,0 +1,71 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ede0b1; /* Light pastel yellow */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Main Container */
+.container {
+    position: relative;
+    text-align: center;
+}
+
+/* Image Wrapper */
+.image-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* Profile Image */
+.image-wrapper img {
+    width: 400px; /* Adjust size */
+    height: auto;
+    display: block;
+}
+
+/* Centered Heading (Moved More Downward) */
+.heading {
+    position: absolute;
+    top: 60%; /* Moved further downward */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 28px;
+    font-weight: bold;
+    color: #8a3342;
+    text-align: center;
+    width: 100%;
+}
+
+/* Centered Button (Kept in place) */
+.profile-btn {
+    padding: 10px 15px;
+    font-size: 19px;
+    position: absolute;
+    bottom: 25%; /* Button kept slightly above for balance */
+    left: 50%;
+    transform: translate(-50%, 50%);
+    color: #8a3342;
+    background-color: #ebdaa8; /* Button background color */
+    border: 2px solid #d1b255; /* Border color */
+    border-radius: 30px; /* Rounded corners */
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.profile-btn:hover {
+   
+    background-color:  #efce6d; /* Button color on hover */
+    color:#861628; /* Text color on hover */
+    border-color: #cfa835; /* Border color on hover */
+    
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Selection</title>
+    <link rel="stylesheet" href="clientform.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="form-container" id="personal-form">
+        
+        <form action="personal.php" method="POST" enctype="multipart/form-data">
+            <label class="form-label" for="first-name">Full Name* <span class="private-text">PRIVATE</span></label>
+            <div style="height: 30px;"></div>
+            <div class="name-container">
+                <input type="text" id="first-name" placeholder="FIRST NAME">
+                <input type="text" id="last-name" placeholder="LAST NAME..">
+            </div>
+            
+            <label class="form-label" for="display-name">Display Name*</label>
+            <div style="height: 30px;"></div>
+            <input type="text" id="display-name" placeholder="TYPE YOUR DISPLAY NAME">
+            
+            <label class="form-label" for="profile-picture">Profile Picture*</label>
+            <div class="profile-picture-container">
+                <div style="height: 30px;"></div>
+                <label for="profile-upload">
+                    <img src="profile.png" alt="Profile Picture" class="profile-picture" id="profile-preview">
+                </label>
+                <input type="file" id="profile-upload" accept="image/*" hidden>
+            </div>
+            
+            <label class="form-label" for="description">Description*</label>
+            <div style="height: 30px;"></div>
+            <textarea id="description" placeholder="COULD YOU TELL ABOUT YOUR PROFESSIONAL BACKGROUND, THE PROJECTS YOU'VE WORKED ON, AND YOUR AREAS OF EXPERTISE"></textarea>
+            <div style="height: 30px;"></div>
+            <button>CONTINUE!</button>
+            </form>
+            <div class="corner-image">
+                
+            </div>
+        </div>
+        <div class="corner-image">
+            <img src="leaf.png" alt="Corner Decoration" class="small-corner-image">
+        </div>
+        <script src="script.js"></script>
+    </body>
+    </html>

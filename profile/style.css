@@ -1,0 +1,140 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Navbar */
+.navbar {
+    height: 80px;
+    background-color: #fde1c1;
+    color: #e96958;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+}
+
+/* Main container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+}
+
+/* Profile and Gigs Layout */
+.styled-box {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 85%;
+    max-width: 1200px;
+    background-color: #fff;
+}
+
+/* Profile Section */
+.left-section {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+
+.button {
+    padding: 10px 20px;
+    background-color: #f7a1a1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.button:hover {
+    background-color: #f27b7b;
+}
+
+/* Gigs Section */
+.right-section {
+    width: 60%;
+}
+
+.gig-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.gig-card {
+    width: 30%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.gig-img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.create-gig-button {
+    padding: 15px;
+    font-size: 24px;
+    background-color: #e09d39;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+/* Gig Form */
+.gig-form-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    margin: 0 auto;
+}
+
+.gig-form-container input,
+.gig-form-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.gig-form-container button {
+    padding: 10px 20px;
+    background-color: #e09d39;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.gig-form-container button:hover {
+    background-color: #d68f2f;
+}
