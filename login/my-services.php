@@ -30,8 +30,8 @@ $result = $stmt->get_result();
         <?php while ($gig = $result->fetch_assoc()): ?>
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card h-100">
-                    <?php if (!empty($gig['image'])): ?>
-                        <img src="<?php echo htmlspecialchars($gig['image']); ?>" class="card-img-top" alt="Gig Image" style="height: 200px; object-fit: cover;">
+                    <?php if (!empty($gig['gig_images'])): ?>
+                        <img src="../<?php echo htmlspecialchars($gig['gig_images']); ?>" class="card-img-top" alt="Gig Image" style="height: 200px; object-fit: cover;">
                     <?php else: ?>
                         <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
                             <i class="fas fa-image fa-3x text-muted"></i>
@@ -48,7 +48,7 @@ $result = $stmt->get_result();
                         </p>
                         <p class="card-text"><?php echo htmlspecialchars(substr($gig['gig_description'], 0, 100)) . '...'; ?></p>
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="h5 mb-0">$<?php echo number_format($gig['gig_pricing'], 2); ?></span>
+                            <span class="h5 mb-0">PKR <?php echo number_format($gig['gig_pricing'], 2); ?></span>
                             <div class="btn-group">
                                 <a href="dashboard.php?page=gig-edit&id=<?php echo $gig['id']; ?>" class="btn btn-sm btn-outline-primary">
                                     <i class="fas fa-edit"></i>

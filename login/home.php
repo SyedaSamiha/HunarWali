@@ -1,6 +1,10 @@
 <?php
+// Enable error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Include database connection
-require_once '../config/database.php';
+require_once __DIR__ . '/../config/database.php';
 
 // Get user information
 $user_id = $_SESSION['user_id'];
@@ -13,6 +17,9 @@ END) as total_chats
 FROM messages 
 WHERE sender_id = ? OR receiver_id = ?";
 $chat_stmt = $conn->prepare($chat_query);
+if ($chat_stmt === false) {
+    die("Error preparing chat query: " . $conn->error);
+}
 $chat_stmt->bind_param("iii", $user_id, $user_id, $user_id);
 $chat_stmt->execute();
 $chat_result = $chat_stmt->get_result();
@@ -21,6 +28,9 @@ $total_chats = $chat_result->fetch_assoc()['total_chats'];
 // Get total orders
 $order_query = "SELECT COUNT(*) as total_orders FROM orders WHERE buyer_id = ?";
 $order_stmt = $conn->prepare($order_query);
+if ($order_stmt === false) {
+    die("Error preparing order query: " . $conn->error);
+}
 $order_stmt->bind_param("i", $user_id);
 $order_stmt->execute();
 $order_result = $order_stmt->get_result();
@@ -29,10 +39,24 @@ $total_orders = $order_result->fetch_assoc()['total_orders'];
 // Get total earnings
 $earnings_query = "SELECT COALESCE(SUM(price), 0) as total_earnings FROM orders WHERE seller_id = ?";
 $earnings_stmt = $conn->prepare($earnings_query);
+if ($earnings_stmt === false) {
+    die("Error preparing earnings query: " . $conn->error);
+}
 $earnings_stmt->bind_param("i", $user_id);
 $earnings_stmt->execute();
 $earnings_result = $earnings_stmt->get_result();
 $total_earnings = $earnings_result->fetch_assoc()['total_earnings'];
+
+// Get total services - Fix the table name to match your database
+$services_query = "SELECT COUNT(*) as total_services FROM gigs WHERE user_id = ?";
+$services_stmt = $conn->prepare($services_query);
+if ($services_stmt === false) {
+    die("Error preparing services query: " . $conn->error);
+}
+$services_stmt->bind_param("i", $user_id);
+$services_stmt->execute();
+$services_result = $services_stmt->get_result();
+$total_services = $services_result->fetch_assoc()['total_services'];
 ?>
 <div class="welcome-section">
     <div class="d-flex justify-content-between align-items-center">
@@ -42,6 +66,22 @@ $total_earnings = $earnings_result->fetch_assoc()['total_earnings'];
         </div>
     </div>
 </div>
+
+<?php if ($total_services == 0): ?>
+<!-- No Services CTA -->
+<div class="card bg-light border-0 mb-4">
+    <div class="card-body text-center p-5">
+        <div class="mb-4">
+            <i class="fas fa-rocket fa-4x text-primary"></i>
+        </div>
+        <h3 class="card-title mb-3">Start Your Journey!</h3>
+        <p class="card-text mb-4">You haven't created any services yet. Showcase your skills and start attracting clients by creating your first service.</p>
+        <a href="dashboard.php?page=gig-creation" class="btn btn-primary btn-lg px-5">
+            <i class="fas fa-plus-circle me-2"></i>Create Your First Service
+        </a>
+    </div>
+</div>
+<?php endif; ?>
 
 <!-- Dashboard Cards -->
 <div class="row">

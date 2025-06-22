@@ -45,6 +45,9 @@
                     <a href="index.php" class="active">
                         <i class="fas fa-tachometer-alt"></i> Dashboard
                     </a>
+                    <a href="../hire-freelancer/hire.php">
+                        <i class="fas fa-search"></i> Browse Services
+                    </a>
                     <a href="ordered-services.php">
                         <i class="fas fa-list"></i> Ordered Services
                     </a>

@@ -2,108 +2,84 @@
 session_start();
 require_once '../config/database.php';
 
-// Clear any output buffer to prevent unwanted whitespace
-ob_start();
-
-// Validate session and request
-if (!isset($_SESSION['user_id']) || !isset($_POST['receiver_id'])) {
-    die('Invalid request');
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    die('unauthorized');
 }
 
-$current_user_id = intval($_SESSION['user_id']);
-$receiver_id = intval($_POST['receiver_id']);
-$message = isset($_POST['message']) ? trim($_POST['message']) : '';
-$attachment_url = null;
+$sender_id = $_SESSION['user_id'];
+$receiver_id = $_POST['receiver_id'] ?? null;
+$message = $_POST['message'] ?? '';
 
-// Validate receiver_id
-if ($receiver_id <= 0) {
-    die('Invalid receiver ID');
+if (!$receiver_id) {
+    die('receiver_id is required');
 }
 
-// Define allowed file types and max size (5MB)
-$allowed_types = ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx'];
-$max_file_size = 5 * 1024 * 1024; // 5MB in bytes
-
-// Handle file upload if present
-if (isset($_FILES['attachment']) && $_FILES['attachment']['error'] !== UPLOAD_ERR_NO_FILE) {
-    // Check for upload errors
-    if ($_FILES['attachment']['error'] !== UPLOAD_ERR_OK) {
-        die('File upload error: ' . $_FILES['attachment']['error']);
-    }
-
-    $upload_dir = '../uploads/attachments/';
+try {
+    $attachment_url = null;
     
-    // Ensure upload directory exists with proper permissions
-    if (!file_exists($upload_dir)) {
-        $old_umask = umask(0);
-        if (!mkdir($upload_dir, 0777, true)) {
-            umask($old_umask);
-            die('Failed to create upload directory. Check parent directory permissions.');
+    // Handle file upload if present
+    if (isset($_FILES['attachment']) && $_FILES['attachment']['error'] === UPLOAD_ERR_OK) {
+        $file = $_FILES['attachment'];
+        $fileName = $file['name'];
+        $fileType = $file['type'];
+        $fileTmpName = $file['tmp_name'];
+        $fileError = $file['error'];
+        $fileSize = $file['size'];
+        
+        // Validate file size (max 10MB)
+        if ($fileSize > 10 * 1024 * 1024) {
+            die('File size too large. Maximum size is 10MB.');
         }
-        umask($old_umask);
-    }
-
-    // Check if directory is writable
-    if (!is_writable($upload_dir)) {
-        if (!chmod($upload_dir, 0777)) {
-            die('Upload directory is not writable and could not be fixed. Please set permissions manually (e.g., chmod 777 ' . realpath($upload_dir) . ')');
+        
+        // Validate file type
+        $allowedTypes = [
+            'image/jpeg',
+            'image/png',
+            'image/gif',
+            'image/webp',
+            'application/pdf',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        ];
+        
+        if (!in_array($fileType, $allowedTypes)) {
+            die('Invalid file type. Allowed types: images, PDF, DOC, DOCX');
         }
+        
+        // Generate unique filename
+        $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+        $uniqueFileName = uniqid() . '_' . time() . '.' . $fileExtension;
+        
+        // Create upload directory if it doesn't exist
+        $uploadDir = __DIR__ . '/../uploads/attachments/';
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+        
+        // Move uploaded file
+        $uploadPath = $uploadDir . $uniqueFileName;
+        if (!move_uploaded_file($fileTmpName, $uploadPath)) {
+            die('Failed to upload file');
+        }
+        
+        $attachment_url = 'uploads/attachments/' . $uniqueFileName;
     }
-
-    // Validate file type
-    $file_extension = strtolower(pathinfo($_FILES['attachment']['name'], PATHINFO_EXTENSION));
-    if (!in_array($file_extension, $allowed_types)) {
-        die('Invalid file type. Allowed types: ' . implode(', ', $allowed_types));
+    
+    // Insert message into database
+    $stmt = $conn->prepare("INSERT INTO messages (sender_id, receiver_id, message, attachment_url, message_type) VALUES (?, ?, ?, ?, 'text')");
+    $stmt->bind_param("iiss", $sender_id, $receiver_id, $message, $attachment_url);
+    
+    if ($stmt->execute()) {
+        echo 'success';
+    } else {
+        throw new Exception("Failed to send message: " . $stmt->error);
     }
-
-    // Validate file size
-    if ($_FILES['attachment']['size'] > $max_file_size) {
-        die('File size exceeds limit of ' . ($max_file_size / (1024 * 1024)) . 'MB');
+    
+} catch (Exception $e) {
+    // If there was an error and we uploaded a file, try to delete it
+    if (isset($attachment_url) && file_exists(__DIR__ . '/../' . $attachment_url)) {
+        unlink(__DIR__ . '/../' . $attachment_url);
     }
-
-    // Generate unique filename
-    $unique_filename = uniqid() . '_' . time() . '.' . $file_extension;
-    $target_path = $upload_dir . $unique_filename;
-
-    // Move uploaded file
-    if (!move_uploaded_file($_FILES['attachment']['tmp_name'], $target_path)) {
-        die('Failed to move uploaded file. Check directory permissions or disk space.');
-    }
-
-    // Store relative path instead of just filename
-    $attachment_url = 'uploads/attachments/' . $unique_filename;
+    die($e->getMessage());
 }
-
-// If both message and attachment are empty, return error
-if (empty($message) && empty($attachment_url)) {
-    die('Message or attachment is required');
-}
-
-// Insert the message with attachment
-$query = "INSERT INTO messages (sender_id, receiver_id, message, attachment_url, created_at, is_read) 
-          VALUES (?, ?, ?, ?, NOW(), 0)";
-$stmt = $conn->prepare($query);
-if (!$stmt) {
-    if ($attachment_url && file_exists($upload_dir . basename($attachment_url))) {
-        unlink($upload_dir . basename($attachment_url));
-    }
-    die('Failed to prepare statement: ' . $conn->error);
-}
-
-$stmt->bind_param('iiss', $current_user_id, $receiver_id, $message, $attachment_url);
-
-if ($stmt->execute()) {
-    // Clear output buffer and send exact response
-    ob_end_clean();
-    echo 'success';
-} else {
-    // If message insert fails and we uploaded a file, delete it
-    if ($attachment_url && file_exists($upload_dir . basename($attachment_url))) {
-        unlink($upload_dir . basename($attachment_url));
-    }
-    ob_end_clean();
-    echo 'Failed to send message: ' . $conn->error;
-}
-
-$stmt->close();
-?>

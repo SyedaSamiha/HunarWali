@@ -9,26 +9,25 @@ $conn = new mysqli("localhost", "root", "", "freelance_website");
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $service_id = (int)$_POST['service_id'];
     $name = $conn->real_escape_string($_POST['name']);
     $description = $conn->real_escape_string($_POST['description']);
     $status = $conn->real_escape_string($_POST['status']);
     
-    $sql = "UPDATE sub_services SET service_id=$service_id, name='$name', description='$description', status='$status' WHERE id=$id";
+    $sql = "UPDATE services SET name='$name', description='$description', status='$status' WHERE id=$id";
     
     if ($conn->query($sql)) {
-        header("Location: sub_services.php?success=2");
+        header("Location: services.php?success=2");
     } else {
-        header("Location: sub_services.php?error=2");
+        header("Location: services.php?error=2");
     }
     exit();
 }
 
-$result = $conn->query("SELECT * FROM sub_services WHERE id=$id");
-$sub_service = $result->fetch_assoc();
+$result = $conn->query("SELECT * FROM services WHERE id=$id");
+$service = $result->fetch_assoc();
 
-if (!$sub_service) {
-    header("Location: sub_services.php");
+if (!$service) {
+    header("Location: services.php");
     exit();
 }
 ?>
@@ -38,7 +37,7 @@ if (!$sub_service) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Sub Service - Admin Dashboard</title>
+    <title>Edit Service - Admin Dashboard</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -119,16 +118,10 @@ if (!$sub_service) {
                 <a class="nav-link" href="admin.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="services.php"><i class="fas fa-cogs"></i> Services</a>
+                <a class="nav-link active" href="services.php"><i class="fas fa-cogs"></i> Services</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="sub_services.php"><i class="fas fa-list"></i> Sub Services</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-users"></i> Members</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-address-book"></i> Contact Info</a>
+                <a class="nav-link" href="members.php"><i class="fas fa-users"></i> Members</a>
             </li>
             <li class="nav-item mt-4">
                 <a class="nav-link" href="/Login/index.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -148,42 +141,30 @@ if (!$sub_service) {
     <!-- Main Content -->
     <div class="main-content">
         <div class="welcome-section">
-            <h1 class="display-5"><i class="fas fa-edit"></i> Edit Sub Service</h1>
-            <p class="lead">Modify the sub-service details below.</p>
+            <h1 class="display-5"><i class="fas fa-edit"></i> Edit Service</h1>
+            <p class="lead">Modify the service details below.</p>
         </div>
 
         <div class="table-container">
             <form action="edit_sub_service.php?id=<?php echo $id; ?>" method="POST">
                 <div class="mb-3">
-                    <label for="serviceId" class="form-label">Parent Service</label>
-                    <select class="form-select" id="serviceId" name="service_id" required>
-                        <?php
-                        $services = $conn->query("SELECT id, name FROM services WHERE status = 'active'");
-                        while ($service = $services->fetch_assoc()) {
-                            $selected = ($service['id'] == $sub_service['service_id']) ? 'selected' : '';
-                            echo "<option value='{$service['id']}' {$selected}>{$service['name']}</option>";
-                        }
-                        ?>
-                    </select>
+                    <label for="serviceName" class="form-label">Service Name</label>
+                    <input type="text" class="form-control" id="serviceName" name="name" value="<?php echo htmlspecialchars($service['name']); ?>" required>
                 </div>
                 <div class="mb-3">
-                    <label for="subServiceName" class="form-label">Sub Service Name</label>
-                    <input type="text" class="form-control" id="subServiceName" name="name" value="<?php echo htmlspecialchars($sub_service['name']); ?>" required>
+                    <label for="serviceDescription" class="form-label">Description</label>
+                    <textarea class="form-control" id="serviceDescription" name="description" rows="3" required><?php echo htmlspecialchars($service['description']); ?></textarea>
                 </div>
                 <div class="mb-3">
-                    <label for="subServiceDescription" class="form-label">Description</label>
-                    <textarea class="form-control" id="subServiceDescription" name="description" rows="3" required><?php echo htmlspecialchars($sub_service['description']); ?></textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="subServiceStatus" class="form-label">Status</label>
-                    <select class="form-select" id="subServiceStatus" name="status" required>
-                        <option value="active" <?php echo $sub_service['status'] == 'active' ? 'selected' : ''; ?>>Active</option>
-                        <option value="inactive" <?php echo $sub_service['status'] == 'inactive' ? 'selected' : ''; ?>>Inactive</option>
+                    <label for="serviceStatus" class="form-label">Status</label>
+                    <select class="form-select" id="serviceStatus" name="status" required>
+                        <option value="active" <?php echo $service['status'] == 'active' ? 'selected' : ''; ?>>Active</option>
+                        <option value="inactive" <?php echo $service['status'] == 'inactive' ? 'selected' : ''; ?>>Inactive</option>
                     </select>
                 </div>
                 <div class="text-end">
-                    <a href="sub_services.php" class="btn btn-secondary">Cancel</a>
-                    <button type="submit" class="btn btn-primary">Update Sub Service</button>
+                    <a href="services.php" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Update Service</button>
                 </div>
             </form>
         </div>

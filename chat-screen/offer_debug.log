@@ -1,0 +1,68 @@
+2025-05-31 21:06:15 - Script started
+2025-05-31 21:06:15 - ERROR: Received POST data: Array
+(
+    [receiver_id] => 2
+    [amount] => 200
+    [description] => new offer 
+    [delivery_time] => 10
+)
+
+2025-05-31 21:06:15 - ERROR: Database connection successful
+2025-05-31 21:06:15 - ERROR: Transaction started
+2025-05-31 21:06:15 - ERROR: Prepared message: {"type":"offer","amount":200,"description":"new offer","delivery_time":10,"status":"pending"}
+2025-05-31 21:06:27 - Script started
+2025-05-31 21:06:27 - ERROR: Received POST data: Array
+(
+    [receiver_id] => 2
+    [amount] => 200
+    [description] => new offer 
+    [delivery_time] => 10
+)
+
+2025-05-31 21:06:27 - ERROR: Database connection successful
+2025-05-31 21:06:27 - ERROR: Transaction started
+2025-05-31 21:06:27 - ERROR: Prepared message: {"type":"offer","amount":200,"description":"new offer","delivery_time":10,"status":"pending"}
+2025-05-31 21:07:35 - Script started
+2025-05-31 21:07:35 - ERROR: Received POST data: Array
+(
+    [receiver_id] => 2
+    [amount] => 100
+    [description] => new offer
+    [delivery_time] => 5
+)
+
+2025-05-31 21:07:35 - ERROR: Database connection successful
+2025-05-31 21:07:35 - ERROR: Transaction started
+2025-05-31 21:07:35 - ERROR: Prepared message: {"type":"offer","amount":100,"description":"new offer","delivery_time":5,"status":"pending"}
+2025-05-31 21:07:35 - ERROR: Transaction rolled back
+2025-05-31 21:07:35 - ERROR: Exception caught: Failed to prepare statement: Unknown column 'message_type' in 'field list'
+2025-05-31 21:10:56 - Script started
+2025-05-31 21:10:56 - ERROR: Received POST data: Array
+(
+    [receiver_id] => 2
+    [amount] => 100
+    [description] => new offer
+    [delivery_time] => 5
+)
+
+2025-05-31 21:10:56 - ERROR: Database connection successful
+2025-05-31 21:10:56 - ERROR: Transaction started
+2025-05-31 21:10:56 - ERROR: Prepared message: {"type":"offer","amount":100,"description":"new offer","delivery_time":5,"status":"pending"}
+2025-05-31 21:10:56 - ERROR: Transaction rolled back
+2025-05-31 21:10:56 - ERROR: Exception caught: Failed to prepare statement: Unknown column 'message_type' in 'field list'
+2025-05-31 21:35:58 - Script started
+2025-05-31 21:35:58 - ERROR: Received POST data: Array
+(
+    [receiver_id] => 2
+    [amount] => 200
+    [description] => asdas
+    [delivery_time] => 2
+)
+
+2025-05-31 21:35:58 - ERROR: Database connection successful
+2025-05-31 21:35:58 - ERROR: Transaction started
+2025-05-31 21:35:58 - ERROR: Prepared message: {"type":"offer","amount":200,"description":"asdas","delivery_time":2,"status":"pending"}
+2025-05-31 21:35:58 - ERROR: Statement prepared successfully
+2025-05-31 21:35:58 - ERROR: Parameters bound successfully
+2025-05-31 21:35:58 - ERROR: Statement executed successfully
+2025-05-31 21:35:58 - ERROR: Transaction committed successfully

@@ -14,8 +14,8 @@ if (!isset($_SESSION['user_id'])) {
 $currentUserId = $_SESSION['user_id'];
 
 try {
-    // Modified query to use mysqli
-    $query = "SELECT DISTINCT u.id, u.username 
+    // Modified query to use mysqli and include profile_picture
+    $query = "SELECT DISTINCT u.id, u.username, u.profile_picture 
               FROM users u 
               WHERE u.id IN (
                   SELECT sender_id FROM messages WHERE receiver_id = ?
@@ -156,6 +156,18 @@ $base_url = 'http://localhost/'; // Adjusted to match the correct root path
         .file-input-wrapper .btn {
             cursor: pointer;
         }
+        .profile-picture {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .chat-header .profile-picture {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
     </style>
 </head>
 <body>
@@ -170,8 +182,27 @@ $base_url = 'http://localhost/'; // Adjusted to match the correct root path
                     <?php foreach($users as $user): ?>
                     <div class="user-item" data-user-id="<?php echo htmlspecialchars($user['id']); ?>">
                         <div class="d-flex align-items-center">
-                            <img src="https://ui-avatars.com/api/?name=<?php echo urlencode($user['username']); ?>&background=random"
-                                 class="rounded-circle me-2" alt="<?php echo htmlspecialchars($user['username']); ?>">
+                            <?php
+                            $profilePicSrc = '';
+                            if (!empty($user['profile_picture'])) {
+                                // Check if the path starts with 'uploads/'
+                                if (strpos($user['profile_picture'], 'uploads/') === 0) {
+                                    $profilePicSrc = '../' . $user['profile_picture'];
+                                } else {
+                                    $profilePicSrc = $user['profile_picture'];
+                                }
+                                
+                                // Check if file exists
+                                $absolutePath = __DIR__ . '/../' . $user['profile_picture'];
+                                if (!file_exists($absolutePath)) {
+                                    $profilePicSrc = "https://ui-avatars.com/api/?name=" . urlencode($user['username']) . "&background=random";
+                                }
+                            } else {
+                                $profilePicSrc = "https://ui-avatars.com/api/?name=" . urlencode($user['username']) . "&background=random";
+                            }
+                            ?>
+                            <img src="<?php echo htmlspecialchars($profilePicSrc); ?>"
+                                 class="rounded-circle me-2 profile-picture" alt="<?php echo htmlspecialchars($user['username']); ?>">
                             <div>
                                 <h6 class="mb-0"><?php echo htmlspecialchars($user['username']); ?></h6>
                                 <small class="text-muted">User</small>
@@ -185,7 +216,7 @@ $base_url = 'http://localhost/'; // Adjusted to match the correct root path
                 <div class="col-md-8 col-lg-9 chat-area">
                     <div class="chat-header">
                         <div class="d-flex align-items-center">
-                            <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="User">
+                            <img src="https://via.placeholder.com/40" class="rounded-circle me-2 profile-picture" alt="User">
                             <div>
                                 <h5 class="mb-0">Select a user to start chatting</h5>
                                 <small class="text-muted">Click on a user from the list</small>
@@ -316,6 +347,33 @@ $base_url = 'http://localhost/'; // Adjusted to match the correct root path
                 });
         }
     });
+
+    function respondToOffer(messageId, response) {
+        const formData = new FormData();
+        formData.append('message_id', messageId);
+        formData.append('response', response);
+
+        fetch('../chat-screen/respond_to_offer.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Use the global selectedUserId variable
+                if (typeof loadChat === 'function' && selectedUserId) {
+                    loadChat(selectedUserId);
+                } else {
+                    location.reload();
+                }
+            } else {
+                alert('Failed to respond to offer: ' + data.message);
+            }
+        })
+        .catch(error => {
+            alert('Error: ' + error.message);
+        });
+    }
     </script>
 </body>
 </html>

@@ -68,6 +68,43 @@
                     session_start();
                     require_once '../config/database.php';
 
+                    // --- Start: Auto-create order_tracking table ---
+                    try {
+                        $create_table_query = "CREATE TABLE IF NOT EXISTS order_tracking (
+                            id INT PRIMARY KEY AUTO_INCREMENT,
+                            order_id INT NOT NULL,
+                            status VARCHAR(50) NOT NULL,
+                            description TEXT NOT NULL,
+                            updated_by INT NOT NULL,
+                            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                            FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+                            FOREIGN KEY (updated_by) REFERENCES users(id)
+                        )";
+
+                        if (!$conn->query($create_table_query)) {
+                            throw new Exception("Error creating order_tracking table: " . $conn->error);
+                        }
+
+                        // Check and create indexes
+                        $index_queries = [
+                            'idx_order_tracking_order_id' => "CREATE INDEX idx_order_tracking_order_id ON order_tracking(order_id)",
+                            'idx_order_tracking_updated_at' => "CREATE INDEX idx_order_tracking_updated_at ON order_tracking(updated_at)"
+                        ];
+
+                        foreach ($index_queries as $index_name => $index_query) {
+                            $check_index_sql = "SHOW INDEX FROM order_tracking WHERE Key_name = '$index_name'";
+                            $result = $conn->query($check_index_sql);
+                            if ($result && $result->num_rows == 0) {
+                                if (!$conn->query($index_query)) {
+                                    // Non-fatal, just log or ignore in production.
+                                }
+                            }
+                        }
+                    } catch (Exception $e) {
+                        die("Database setup failed: " . $e->getMessage());
+                    }
+                    // --- End: Auto-create order_tracking table ---
+
                     // Enable error reporting
                     error_reporting(E_ALL);
                     ini_set('display_errors', 1);
@@ -110,10 +147,12 @@
                                 g.gig_title AS service_name, 
                                 o.created_at, 
                                 o.status, 
-                                u.username AS seller_username
+                                u.username AS seller_username,
+                                CASE WHEN r.id IS NOT NULL THEN 1 ELSE 0 END as has_reviewed
                             FROM orders o
                             JOIN gigs g ON o.gig_id = g.id
                             JOIN users u ON o.seller_id = u.id
+                            LEFT JOIN reviews r ON r.order_id = o.id AND r.user_id = ?
                             WHERE o.buyer_id = ?
                             ORDER BY o.created_at DESC
                         ";
@@ -123,7 +162,7 @@
                             throw new Exception("Failed to prepare statement: " . $conn->error);
                         }
 
-                        $stmt->bind_param("i", $currentUserId);
+                        $stmt->bind_param("ii", $currentUserId, $currentUserId);
                         $stmt->execute();
                         $result = $stmt->get_result();
                         $orders = $result->fetch_all(MYSQLI_ASSOC);
@@ -166,6 +205,10 @@
                                                             <button type="submit" name="update_status" class="btn btn-primary btn-sm ms-2"><i class="fas fa-save"></i> Update</button>
                                                         </form>
                                                         <a href="view-order.php?id=<?php echo htmlspecialchars($order['id']); ?>" class="btn btn-info btn-sm ms-2"><i class="fas fa-eye"></i> View</a>
+                                                        <a href="order-tracking.php?id=<?php echo htmlspecialchars($order['id']); ?>" class="btn btn-warning btn-sm ms-2"><i class="fas fa-truck"></i> Track</a>
+                                                        <?php if ($order['status'] === 'Completed' && !$order['has_reviewed']): ?>
+                                                            <a href="view-order.php?id=<?php echo htmlspecialchars($order['id']); ?>&section=feedback" class="btn btn-success btn-sm ms-2"><i class="fas fa-star"></i> Give Feedback</a>
+                                                        <?php endif; ?>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>

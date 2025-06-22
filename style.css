@@ -231,17 +231,16 @@ section {
 }
 
 .hero-content {
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
-    text-align: center;
-    padding: 2.5rem 2rem;
-    background: rgba(255, 255, 255, 0.85);
-    border-radius: 24px;
-    box-shadow: var(--shadow);
-    animation: scaleIn 0.8s ease-out;
+    position: relative;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 3rem;
+    border-radius: 20px;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 /* Hero Page 1 */
@@ -260,12 +259,32 @@ section {
 }
 
 #heropagetext1 {
-    font-size: 3.2rem;
-    margin-bottom: 2.2rem;
-    color: #fff;
+    font-size: 4rem;
+    margin-bottom: 2.5rem;
+    color: #ffffff;
     line-height: 1.2;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.18);
-    letter-spacing: 1.5px;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2),
+                 0 5px 15px rgba(0, 0, 0, 0.15),
+                 0 10px 30px rgba(0, 0, 0, 0.1);
+    letter-spacing: -0.02em;
+    font-weight: 900;
+    max-width: 1000px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+    transform: translateZ(0);
+    -webkit-font-smoothing: antialiased;
+    margin: 0 auto 2.5rem;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 2rem;
 }
 
 .join-btn {
@@ -282,6 +301,10 @@ section {
     letter-spacing: 1px;
     position: relative;
     overflow: hidden;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .join-btn::before {

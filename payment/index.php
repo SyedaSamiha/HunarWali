@@ -20,11 +20,30 @@ $gig = $_SESSION['gig_details'];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        header {
+            flex-shrink: 0;
+        }
+        
         main {
+            flex: 1;
             max-width: 1200px;
             margin: 2rem auto;
             text-align: center;
+            padding: 0 1rem;
         }
+        
         .main-title {
             color: #8a3342;
             font-size: 2rem;
@@ -46,6 +65,7 @@ $gig = $_SESSION['gig_details'];
             display: flex;
             justify-content: center;
             gap: 2rem;
+            flex-wrap: wrap;
         }
         .method-card {
             background: #fff;
@@ -74,6 +94,11 @@ $gig = $_SESSION['gig_details'];
         }
         .method-btn:hover {
             background: #6b2834;
+        }
+        
+        footer {
+            flex-shrink: 0;
+            margin-top: auto;
         }
     </style>
 </head>

@@ -37,6 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
+    // Check if image was uploaded
+    if (!isset($_FILES['gig_image']) || $_FILES['gig_image']['error'] !== UPLOAD_ERR_OK) {
+        header("Location: gig-creation.php?error=image_required");
+        exit();
+    }
+
     // Handle image upload
     $image_path = null;
     if (isset($_FILES['gig_image']) && $_FILES['gig_image']['error'] === UPLOAD_ERR_OK) {

@@ -18,15 +18,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Prepare the SQL query to check if the email exists
-    $stmt = $conn->prepare("SELECT id, username, password, role, gender FROM users WHERE email = ?");  // Added 'gender' field to the query
+    $stmt = $conn->prepare("SELECT id, username, password, role, gender, status FROM users WHERE email = ?");  // Added 'status' field to the query
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
         // Fetch user data
-        $stmt->bind_result($user_id, $username, $hashed_password, $role, $gender);
+        $stmt->bind_result($user_id, $username, $hashed_password, $role, $gender, $status);
         $stmt->fetch();
+
+        if ($status === 'Blocked') {
+            $_SESSION['message'] = "Your account has been blocked. Please contact support.";
+            header("Location: http://localhost/Login/index.php");
+            exit();
+        }
+
+        if ($status === 'Pending Approval') {
+            $_SESSION['message'] = "Your account is pending approval. Please wait for admin verification.";
+            header("Location: http://localhost/Login/index.php");
+            exit();
+        }
 
         if (password_verify($password, $hashed_password)) {
             // Password is correct, store user data in session
@@ -36,15 +48,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['gender'] = $gender;
 
             // Redirect based on user role
-            if ($role == 'freelancer') {
-                header("Location: http://localhost/login/dashboard.php");
-            } elseif ($role == 'client') {
-                header("Location: http://localhost/client-panel/index.php");
-            } elseif ($role == 'admin') {
+            if ($role == 'admin') {
                 header("Location: http://localhost/dashboard/admin.php");
             } else {
-                // Fallback redirection if role is not recognized
-                header("Location: http://localhost/index.php");
+                // Both client and freelancer users go to main homepage
+                header("Location: http://localhost/");
             }
             exit();
         } else {

@@ -197,6 +197,18 @@ if (!isset($_SESSION['user_id'])) {
                         case 'settings':
                             include('settings.php');
                             break;
+                        case 'freelancer-feedback':
+                            include('freelancer-feedback.php');
+                            break;
+                        case 'view-freelancer-feedback':
+                            include('view-freelancer-feedback.php');
+                            break;
+                        case 'order-details':
+                            include('order-details.php');
+                            break;
+                        case 'order-tracking':
+                            include('order-tracking.php');
+                            break;
                         default:
                             // Display default dashboard content
                             include('home.php');

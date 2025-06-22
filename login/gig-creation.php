@@ -41,6 +41,8 @@ $services_result = $conn->query($services_query);
                                 <?php
                                 if ($_GET['error'] === 'missing_fields') {
                                     echo "Please fill in all required fields.";
+                                } elseif ($_GET['error'] === 'image_required') {
+                                    echo "Please select an image for your gig. Image upload is required.";
                                 } elseif ($_GET['error'] === 'invalid_file_type') {
                                     echo "Invalid file type. Only JPG, JPEG, PNG, and GIF are allowed.";
                                 } elseif ($_GET['error'] === 'not_an_image') {
@@ -88,14 +90,14 @@ $services_result = $conn->query($services_query);
                             </div>
 
                             <div class="mb-3">
-                                <label for="gig_pricing" class="form-label">Price ($)</label>
+                                <label for="gig_pricing" class="form-label">Price (PKR)</label>
                                 <input type="number" class="form-control" id="gig_pricing" name="gig_pricing" step="0.01" min="0" required>
                             </div>
 
                             <div class="mb-3">
-                                <label for="gig_image" class="form-label">Gig Image</label>
-                                <input type="file" class="form-control" id="gig_image" name="gig_image" accept="image/*">
-                                <small class="text-muted">Recommended size: 800x600 pixels</small>
+                                <label for="gig_image" class="form-label">Gig Image *</label>
+                                <input type="file" class="form-control" id="gig_image" name="gig_image" accept="image/*" required>
+                                <small class="text-muted">Recommended size: 800x600 pixels. Image upload is required.</small>
                             </div>
 
                             <div class="d-grid gap-2">

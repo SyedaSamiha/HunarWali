@@ -72,51 +72,80 @@ if (isset($_SESSION['message'])) {
             const gender = document.getElementById('gender').value;
             const role = document.querySelector('select[name="role"]').value;
             const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const idFront = document.getElementById('id_front').files[0];
+            const idBack = document.getElementById('id_back').files[0];
             
             // Check password length
             if (password.length < 8) {
                 e.preventDefault();
-                const errorMessage = document.createElement('p');
-                errorMessage.className = 'animated-message';
-                errorMessage.textContent = 'Password must be at least 8 characters long.';
-                
-                // Remove any existing error message
-                const existingMessage = document.querySelector('.animated-message');
-                if (existingMessage) {
-                    existingMessage.remove();
-                }
-                
-                // Add the new error message
-                form.insertAdjacentElement('beforebegin', errorMessage);
-                
-                // Hide the message after 4 seconds
-                setTimeout(function() {
-                    errorMessage.style.display = 'none';
-                }, 4000);
+                showErrorMessage('Password must be at least 8 characters long.');
+                return;
+            }
+            
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                showErrorMessage('Password and Confirm Password must match.');
+                return;
+            }
+            
+            // Check if ID card front is uploaded
+            if (!idFront) {
+                e.preventDefault();
+                showErrorMessage('Please upload ID Card (Front).');
+                return;
+            }
+            
+            // Check if ID card front is an image
+            if (!idFront.type.startsWith('image/')) {
+                e.preventDefault();
+                showErrorMessage('ID Card (Front) must be an image file.');
+                return;
+            }
+            
+            // Check if ID card back is uploaded
+            if (!idBack) {
+                e.preventDefault();
+                showErrorMessage('Please upload ID Card (Back).');
+                return;
+            }
+            
+            // Check if ID card back is an image
+            if (!idBack.type.startsWith('image/')) {
+                e.preventDefault();
+                showErrorMessage('ID Card (Back) must be an image file.');
                 return;
             }
             
             if (gender === 'male' && role === 'freelancer') {
                 e.preventDefault();
-                const errorMessage = document.createElement('p');
-                errorMessage.className = 'animated-message';
-                errorMessage.textContent = 'Sorry, male freelancers are not allowed to register.';
-                
-                // Remove any existing error message
-                const existingMessage = document.querySelector('.animated-message');
-                if (existingMessage) {
-                    existingMessage.remove();
-                }
-                
-                // Add the new error message
-                form.insertAdjacentElement('beforebegin', errorMessage);
-                
-                // Hide the message after 4 seconds
-                setTimeout(function() {
-                    errorMessage.style.display = 'none';
-                }, 4000);
+                showErrorMessage('Sorry, male freelancers are not allowed to register.');
+                return;
             }
         });
+        
+        // Function to show error messages
+        function showErrorMessage(message) {
+            const errorMessage = document.createElement('p');
+            errorMessage.className = 'animated-message';
+            errorMessage.textContent = message;
+            
+            // Remove any existing error message
+            const existingMessage = document.querySelector('.animated-message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+            
+            // Add the new error message
+            const form = document.getElementById('registration-form');
+            form.insertAdjacentElement('beforebegin', errorMessage);
+            
+            // Hide the message after 4 seconds
+            setTimeout(function() {
+                errorMessage.style.display = 'none';
+            }, 4000);
+        }
     };
 </script>
 
