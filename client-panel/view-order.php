@@ -2,6 +2,17 @@
 // Enable error reporting at the top of the file
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
+session_start();
+require_once '../config/database.php';
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../login/login.php');
+    exit();
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,29 +25,53 @@ ini_set('display_errors', 1);
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #FF6B6B;
+            --secondary-color: #4ECDC4;
+            --dark-color: #2C3E50;
+            --light-color: #F7F9FC;
+            --accent-color: #FFE66D;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-color);
+        }
+
         .sidebar {
             min-height: 100vh;
-            background-color: #343a40;
+            background-color: var(--dark-color);
             padding-top: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
         }
+
+        .sidebar h3 {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
         .sidebar a {
             color: #fff;
             text-decoration: none;
-            padding: 10px 15px;
+            padding: 12px 20px;
             display: block;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+            margin: 5px 10px;
         }
+
         .sidebar a:hover {
-            background-color: #495057;
+            background-color: var(--primary-color);
+            transform: translateX(5px);
         }
-        .sidebar a.active {
-            background-color: #0d6efd;
+
+        .sidebar .active {
+            background-color: var(--primary-color);
         }
-        .sidebar i {
-            margin-right: 10px;
-        }
+
         .content {
-            padding: 20px;
+            padding: 30px;
         }
         .rating {
             display: flex;
@@ -73,6 +108,12 @@ ini_set('display_errors', 1);
             margin-bottom: 10px;
         }
     </style>
+    <script>
+        // Page initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            // Page initialization code can go here
+        });
+    </script>
 </head>
 <body>
     <div class="container-fluid">
@@ -90,6 +131,9 @@ ini_set('display_errors', 1);
                     <a href="messages.php">
                         <i class="fas fa-envelope"></i> Messages
                     </a>
+                    <a href="../index.php">
+                        <i class="fas fa-home"></i> Back to Main Site
+                    </a>
                     <a href="logout.php" class="mt-5">
                         <i class="fas fa-sign-out-alt"></i> Sign Out
                     </a>
@@ -101,8 +145,7 @@ ini_set('display_errors', 1);
                 <div class="container">
                     <h2 class="mb-4">Order Details</h2>
                     <?php
-                    session_start();
-                    require_once '../config/database.php';
+                    // Database connection already established at the top of the file
 
                     if (!isset($_SESSION['user_id'])) {
                         header('Location: ../login/login.php');
@@ -341,4 +384,4 @@ ini_set('display_errors', 1);
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html> 
+</html>

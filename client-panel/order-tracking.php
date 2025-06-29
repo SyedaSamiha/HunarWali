@@ -7,6 +7,8 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 require_once '../config/database.php';
 
+
+
 if (!isset($_SESSION['user_id'])) {
     header('Location: ../login/login.php');
     exit();
@@ -172,6 +174,12 @@ $tracking_result = $tracking_stmt->get_result();
             font-weight: 500;
         }
     </style>
+    <script>
+        // Page initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            // Page initialization code can go here
+        });
+    </script>
 </head>
 <body>
     <!-- Navigation -->
@@ -182,6 +190,7 @@ $tracking_result = $tracking_stmt->get_result();
                 <a class="nav-link" href="index.php">Dashboard</a>
                 <a class="nav-link" href="ordered-services.php">My Orders</a>
                 <a class="nav-link" href="messages.php">Messages</a>
+                <a class="nav-link" href="../index.php">Back to Main Site</a>
                 <a class="nav-link" href="logout.php">Logout</a>
             </div>
         </div>
@@ -206,7 +215,7 @@ $tracking_result = $tracking_stmt->get_result();
                         <h5 class="card-title"><i class="fas fa-info-circle me-2"></i>Order Information</h5>
                         <p><strong>Service:</strong> <?php echo htmlspecialchars($order['gig_title']); ?></p>
                         <p><strong>Description:</strong> <?php echo htmlspecialchars($order['gig_description']); ?></p>
-                        <p><strong>Price:</strong> $<?php echo number_format($order['price'], 2); ?></p>
+                        <p><strong>Price:</strong> PKR <?php echo number_format($order['price'], 2); ?></p>
                         <p><strong>Order Date:</strong> <?php echo date('M d, Y H:i', strtotime($order['created_at'])); ?></p>
                     </div>
                 </div>
@@ -332,4 +341,4 @@ $tracking_result = $tracking_stmt->get_result();
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html> 
+</html>

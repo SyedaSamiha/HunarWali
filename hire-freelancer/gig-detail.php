@@ -87,7 +87,7 @@ $_SESSION['gig_details'] = [
     'created_at' => $gig['created_at']
 ];
 
-// Convert price to PKR
+// Get price in PKR
 $price_pkr = $gig['gig_pricing'];
 
 // Handle gig image - use actual image if exists, otherwise use default
@@ -130,37 +130,50 @@ if ($totalReviews > 0) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f9fafb;
-            color: #1f2937;
+            background-color: var(--background);
+            color: var(--text-color);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-size: 16px;
+            line-height: 1.6;
         }
         .main-content {
             max-width: 1280px;
-            margin: 2rem auto;
-            padding: 0 2rem;
+            margin: 2.5rem auto;
+            padding: 0 2.5rem;
         }
         .breadcrumb {
             font-size: 0.95rem;
-            color: #6b7280;
-            margin-bottom: 2rem;
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            background-color: var(--background-light);
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-xs);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            display: inline-flex;
         }
         .breadcrumb a {
-            color: #8a3342;
+            color: var(--primary-color);
             text-decoration: none;
-            transition: color 0.2s;
+            transition: var(--transition);
+            font-weight: 500;
+            position: relative;
         }
         .breadcrumb a:hover {
-            color: #6b2834;
+            color: var(--primary-dark);
         }
         .breadcrumb span::before {
             content: "›";
             margin: 0 0.5rem;
-            color: #9ca3af;
+            color: var(--text-light);
+            font-weight: 300;
         }
         .gig-detail-flex {
             display: grid;
@@ -169,16 +182,31 @@ if ($totalReviews > 0) {
             align-items: start;
         }
         .gig-left {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            background: var(--background-light);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
             overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            transition: var(--transition);
         }
         .gig-image {
             height: 450px;
             position: relative;
-            background: #f3f4f6;
+            background: var(--background-dark);
             overflow: hidden;
+        }
+        .gig-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 70%, rgba(0, 0, 0, 0.05));
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.7;
+            transition: var(--transition);
         }
         .gig-image img {
             width: 100%;
@@ -186,7 +214,7 @@ if ($totalReviews > 0) {
             object-fit: cover;
             position: absolute;
             opacity: 0;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateX(100%);
         }
         .gig-image img.active {
@@ -204,18 +232,20 @@ if ($totalReviews > 0) {
             z-index: 2;
         }
         .carousel-btn {
-            background: rgba(255, 255, 255, 0.9);
-            color: #8a3342;
+            background: var(--background-light);
+            color: var(--primary-color);
             border: none;
             width: 44px;
             height: 44px;
-            border-radius: 50%;
-            cursor: pointer;
+            border-radius: var(--radius-full);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            z-index: 2;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            opacity: 0.9;
         }
         .carousel-btn:hover {
             background: white;
@@ -387,118 +417,205 @@ if ($totalReviews > 0) {
             top: 2rem;
         }
         .order-card {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            background: var(--background-light);
+            border-radius: var(--radius-lg);
             padding: 2rem;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 2rem;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            transition: var(--transition);
         }
         .order-card h4 {
-            color: #1f2937;
+            color: var(--text-color);
             font-size: 1.25rem;
-            margin: 0 0 1.5rem 0;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
         }
         .gig-price {
-            font-size: 2.5rem;
-            color: #8a3342;
+            font-size: 2rem;
+            color: var(--primary-color);
             font-weight: 700;
             margin-bottom: 1.5rem;
             display: flex;
             align-items: baseline;
             gap: 0.5rem;
-        }
-        .gig-price::before {
-            content: "Rs";
-            font-size: 1.5rem;
-            color: #6b7280;
+            letter-spacing: -0.01em;
         }
         .order-features {
-            margin: 0 0 2rem 0;
+            list-style: none;
             padding: 0;
+            margin: 0 0 1.5rem;
+            background-color: var(--background);
+            border-radius: var(--radius);
+            padding: 1.5rem;
         }
         .order-features li {
-            color: #4b5563;
-            margin-bottom: 1rem;
-            list-style: none;
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            font-size: 1.05rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
         }
         .order-features li i {
-            color: #8a3342;
-            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-size: 1.1rem;
         }
         .order-btn {
-            width: 100%;
-            padding: 1rem;
-            border-radius: 12px;
-            background: #8a3342;
+            background: var(--primary-color);
             color: white;
-            font-size: 1.1rem;
-            font-weight: 600;
             border: none;
+            padding: 1rem;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: var(--transition);
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.75rem;
-            margin-bottom: 1rem;
         }
+        
+        .order-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-dark);
+            opacity: 0;
+            transition: var(--transition-fast);
+        }
+        
         .order-btn:hover {
-            background: #6b2834;
+            background: var(--primary-dark);
             transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
+        
+        .order-btn:hover::before {
+            opacity: 0.2;
+        }
+        
+        .order-btn:active {
+            transform: translateY(0);
+        }
+        
         .chat-btn {
             width: 100%;
             padding: 1rem;
-            border-radius: 12px;
-            background: white;
-            color: #8a3342;
-            font-size: 1.1rem;
+            border: 2px solid var(--primary-color);
+            background: var(--background-light);
+            color: var(--primary-color);
+            border-radius: var(--radius);
+            font-size: 1rem;
             font-weight: 600;
-            border: 2px solid #8a3342;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.75rem;
+            position: relative;
+            overflow: hidden;
         }
+        
+        .chat-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--secondary-color);
+            opacity: 0;
+            transition: var(--transition-fast);
+        }
+        
         .chat-btn:hover {
-            background: #f3e8ea;
+            background: var(--secondary-color);
+            color: white;
             transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .chat-btn:hover::before {
+            opacity: 0.2;
+        }
+        
+        .chat-btn:active {
+            transform: translateY(0);
         }
         @media (max-width: 1024px) {
             .gig-detail-flex {
                 grid-template-columns: 1fr;
-                gap: 2rem;
+                gap: 2.5rem;
             }
-            .gig-right {
+            .order-card {
                 position: static;
+                margin-bottom: 2rem;
             }
             .main-content {
-                padding: 0 1rem;
+                padding: 0 2rem;
+                margin: 2rem auto;
+            }
+        }
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 0 1.5rem;
+                margin: 1.5rem auto;
+            }
+            .gig-image {
+                height: 350px;
+            }
+            .carousel-btn {
+                width: 40px;
+                height: 40px;
+                opacity: 0.8;
+            }
+            .carousel-controls {
+                bottom: 15px;
+            }
+            .gig-left {
+                border-radius: var(--radius);
+            }
+            .order-card {
+                border-radius: var(--radius);
+                padding: 1.5rem;
             }
         }
         @media (max-width: 640px) {
+            .main-content {
+                padding: 0 1rem;
+                margin: 1rem auto;
+            }
             .gig-image {
-                height: 300px;
+                height: 250px;
             }
-            .gig-content {
-                padding: 1.5rem;
+            .carousel-controls {
+                bottom: 10px;
             }
-            .gig-title {
-                font-size: 1.75rem;
+            .carousel-btn {
+                width: 36px;
+                height: 36px;
             }
-            .seller-info {
-                padding: 1rem;
+            .gig-price {
+                font-size: 1.5rem;
             }
-            .reviews-section {
-                padding: 1.5rem;
+            .breadcrumb {
+                font-size: 0.85rem;
+                padding: 0.5rem 1rem;
+                margin-bottom: 1.5rem;
             }
-            .order-card {
-                padding: 1.5rem;
+            .order-features {
+                padding: 1.25rem;
             }
         }
     </style>
@@ -514,9 +631,15 @@ if ($totalReviews > 0) {
             <!-- Left Column -->
             <div class="gig-left">
                 <div class="gig-image">
-                    <img src="<?php echo $image; ?>" alt="Gig Image" class="active">
-                    <img src="<?php echo $image; ?>" alt="Gig Image">
-                    <img src="<?php echo $image; ?>" alt="Gig Image">
+                    <?php
+                    // Main gig image
+                    echo '<img src="' . $image . '" alt="' . htmlspecialchars($gig['gig_title']) . '" class="active">';
+                    
+                    // Since we only have one image in the database, we'll create a professional look
+                    // by showing the same image with different CSS filters for the carousel
+                    echo '<img src="' . $image . '" alt="' . htmlspecialchars($gig['gig_title']) . '" style="filter: brightness(1.1) contrast(1.1);">';
+                    echo '<img src="' . $image . '" alt="' . htmlspecialchars($gig['gig_title']) . '" style="filter: saturate(1.2);">';
+                    ?>
                     <div class="carousel-controls">
                         <button class="carousel-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
                         <button class="carousel-btn next-btn"><i class="fas fa-chevron-right"></i></button>
@@ -536,12 +659,19 @@ if ($totalReviews > 0) {
                         <div class="seller-details">
                             <div class="seller-name"><?php echo htmlspecialchars($gig['seller_name']); ?></div>
                             <div class="seller-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>4.9 (201 reviews)</span>
+                                <?php
+                                // Display stars based on average rating
+                                for ($i = 1; $i <= 5; $i++) {
+                                    if ($i <= floor($avgRating)) {
+                                        echo '<i class="fas fa-star"></i>';
+                                    } elseif ($i - $avgRating < 1 && $i - $avgRating > 0) {
+                                        echo '<i class="fas fa-star-half-alt"></i>';
+                                    } else {
+                                        echo '<i class="far fa-star"></i>';
+                                    }
+                                }
+                                ?>
+                                <span><?php echo $avgRating; ?> (<?php echo $totalReviews; ?> reviews)</span>
                             </div>
                         </div>
                     </div>
@@ -605,13 +735,39 @@ if ($totalReviews > 0) {
             <div class="gig-right">
                 <div class="order-card">
                     <h4>Order this service</h4>
-                    <div class="gig-price">Rs <?php echo number_format($price_pkr); ?> PKR</div>
+                    <div class="gig-price">PKR <?php echo number_format($price_pkr); ?></div>
                     <ul class="order-features">
-                        <li><i class="fas fa-check-circle" style="color:#8a3342;"></i> Fast delivery</li>
-                        <li><i class="fas fa-check-circle" style="color:#8a3342;"></i> Quality work</li>
-                        <li><i class="fas fa-check-circle" style="color:#8a3342;"></i> Secure payment</li>
+                        <?php
+                        // Generate features based on gig details
+                        $features = [];
+                        
+                        // Add feature based on rating
+                        if ($avgRating >= 4.5) {
+                            $features[] = '<li><i class="fas fa-check-circle" style="color:#8a3342;"></i> Top-rated seller (' . $avgRating . ' stars)</li>';
+                        } elseif ($avgRating >= 4.0) {
+                            $features[] = '<li><i class="fas fa-check-circle" style="color:#8a3342;"></i> Highly rated seller (' . $avgRating . ' stars)</li>';
+                        } elseif ($avgRating > 0) {
+                            $features[] = '<li><i class="fas fa-check-circle" style="color:#8a3342;"></i> Rated ' . $avgRating . ' stars</li>';
+                        }
+                        
+                        // Add feature based on review count
+                        if ($totalReviews > 10) {
+                            $features[] = '<li><i class="fas fa-check-circle" style="color:#8a3342;"></i> ' . $totalReviews . ' satisfied customers</li>';
+                        } elseif ($totalReviews > 0) {
+                            $features[] = '<li><i class="fas fa-check-circle" style="color:#8a3342;"></i> ' . $totalReviews . ' customer reviews</li>';
+                        }
+                        
+                        // Always add these features
+                        $features[] = '<li><i class="fas fa-check-circle" style="color:#8a3342;"></i> Quality work guaranteed</li>';
+                        $features[] = '<li><i class="fas fa-check-circle" style="color:#8a3342;"></i> Secure payment</li>';
+                        
+                        // Output features
+                        foreach ($features as $feature) {
+                            echo $feature;
+                        }
+                        ?>
                     </ul>
-                    <a href="/payment/index.php" class="order-btn" style="text-decoration: none; display: block; text-align: center;"><i class="fas fa-shopping-cart"></i> Continue</a>
+                    <a href="/payment/index.php?gig_id=<?php echo $gig['id']; ?>" class="order-btn" style="text-decoration: none; display: block; text-align: center;"><i class="fas fa-shopping-cart"></i> Continue</a>
                     <form method="POST" action="/login/dashboard.php?page=messages" style="margin-top: 0.5rem;">
                         <input type="hidden" name="start_chat" value="1">
                         <input type="hidden" name="seller_id" value="<?php echo $gig['user_id']; ?>">

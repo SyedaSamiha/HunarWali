@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS orders (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  client_id INT NOT NULL,
+  freelancer_id INT NOT NULL,
+  amount DECIMAL(10,2) NOT NULL,
+  description TEXT NOT NULL,
+  delivery_time INT NOT NULL,
+  status VARCHAR(50) NOT NULL DEFAULT 'pending',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (client_id) REFERENCES users(id),
+  FOREIGN KEY (freelancer_id) REFERENCES users(id)
+);

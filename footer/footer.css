@@ -1,5 +1,5 @@
 .footer {
-    background: #2c3e50;
+    background: var(--primary-dark, #2c3e50);
     color: white;
     padding: 4rem 2rem 2rem;
 }
@@ -28,7 +28,7 @@
 }
 
 .footer-links a:hover {
-    color: white;
+    color: var(--secondary-color, #e74c3c);
 }
 
 .social-icons {
@@ -43,7 +43,7 @@
 }
 
 .social-icons a:hover {
-    color: #e74c3c;
+    color: var(--secondary-color, #e74c3c);
 }
 
 .footer-bottom {

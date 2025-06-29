@@ -8,9 +8,9 @@
 
 body {
     margin: 0;
-    font-family: 'Montserrat', Arial, sans-serif;
-    background: #fff;
-    color: #222;
+    font-family: 'Poppins', sans-serif;
+    background: #f9f9f9;
+    color: #333;
 }
 
 main {
@@ -19,7 +19,7 @@ main {
 }
 
 .main-title {
-    color: #5a175c;
+    color: #6c63ff;
     font-size: 2.2rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
@@ -28,7 +28,7 @@ main {
 }
 
 .main-subtitle {
-    color: #18753d;
+    color: #ff6584;
     font-size: 1.3rem;
     font-weight: 600;
     margin-bottom: 2.2rem;
@@ -45,16 +45,16 @@ main {
 
 .method-card {
     background: #fff;
-    border: 3px solid #eec6c6;
-    border-radius: 18px;
+    border: 3px solid rgba(108, 99, 255, 0.2);
+    border-radius: 12px;
     width: 290px;
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 24px 0 18px 0;
     margin-bottom: 18px;
-    transition: transform 0.3s cubic-bezier(.25, .8, .25, 1), box-shadow 0.3s cubic-bezier(.25, .8, .25, 1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: fadeInUp 1.2s;
 }
 
@@ -74,22 +74,24 @@ main {
 
 .method-btn {
     margin-top: 10px;
-    background: #f7a9a9;
-    color: #3b3b6d;
+    background: #6c63ff;
+    color: #ffffff;
     border: none;
-    border-radius: 22px;
+    border-radius: 12px;
     padding: 13px 32px;
     font-size: 1.15rem;
-    font-weight: 700;
+    font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s, transform 0.2s;
+    transition: all 0.3s ease;
     letter-spacing: 1px;
     animation: fadeInUp 1.3s;
+    box-shadow: 0 4px 14px rgba(108, 99, 255, 0.4);
 }
 
 .method-btn:hover {
-    background: #f48f8f;
-    transform: scale(1.07);
+    background: #5650cc;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.5);
 }
 
 

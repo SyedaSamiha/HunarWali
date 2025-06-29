@@ -111,7 +111,7 @@ $gig = $_SESSION['gig_details'];
         <h3 class="main-subtitle">Choose your preferred payment option</h3>
         <div class="gig-info">
             <h4>Paying for: <?php echo htmlspecialchars($gig['gig_title']); ?></h4>
-            <p>Price: Rs <?php echo number_format($gig['gig_pricing']); ?> PKR</p>
+            <p>Price: PKR <?php echo number_format($gig['gig_pricing']); ?></p>
             <p>Seller: <?php echo htmlspecialchars($gig['seller_name']); ?></p>
         </div>
         <div class="methods">

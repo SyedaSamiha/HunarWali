@@ -176,8 +176,11 @@ $base_url = 'http://localhost/'; // Adjusted to match the correct root path
             <div class="row h-100">
                 <!-- User List Section -->
                 <div class="col-md-4 col-lg-3 user-list">
-                    <div class="p-3 border-bottom">
+                    <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
                         <h4 class="mb-0">Chats</h4>
+                        <a href="../index.php" class="btn btn-sm btn-outline-secondary">
+                            <i class="fas fa-home"></i> Main Site
+                        </a>
                     </div>
                     <?php foreach($users as $user): ?>
                     <div class="user-item" data-user-id="<?php echo htmlspecialchars($user['id']); ?>">
@@ -348,32 +351,61 @@ $base_url = 'http://localhost/'; // Adjusted to match the correct root path
         }
     });
 
-    function respondToOffer(messageId, response) {
-        const formData = new FormData();
-        formData.append('message_id', messageId);
-        formData.append('response', response);
-
-        fetch('../chat-screen/respond_to_offer.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Use the global selectedUserId variable
-                if (typeof loadChat === 'function' && selectedUserId) {
-                    loadChat(selectedUserId);
-                } else {
-                    location.reload();
-                }
-            } else {
-                alert('Failed to respond to offer: ' + data.message);
+    function respondToCustomOrder(messageId, response) {
+        if (confirm('Are you sure you want to ' + response + ' this order?')) {
+            // Show loading indicator
+            const loadingSpinner = document.getElementById('loading-spinner');
+            if (loadingSpinner) {
+                loadingSpinner.style.display = 'flex';
             }
-        })
-        .catch(error => {
-            alert('Error: ' + error.message);
-        });
+            
+            // Determine which endpoint to use based on the message type
+            const messageElement = document.querySelector(`[data-message-id="${messageId}"]`);
+            const messageType = messageElement ? messageElement.getAttribute('data-message-type') : 'custom_order';
+            
+            const endpoint = messageType === 'offer' ? '../chat-screen/respond_to_offer.php' : '../chat-screen/respond_to_custom_order.php';
+            
+            const formData = new FormData();
+            formData.append('message_id', messageId);
+            formData.append('response', response);
+
+            fetch(endpoint, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Use the global selectedUserId variable
+                    if (typeof loadChat === 'function' && selectedUserId) {
+                        loadChat(selectedUserId);
+                    } else {
+                        location.reload();
+                    }
+                } else {
+                    alert('Error: ' + data.message);
+                }
+                // Hide loading spinner
+                if (loadingSpinner) {
+                    loadingSpinner.style.display = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+                // Hide loading spinner
+                if (loadingSpinner) {
+                    loadingSpinner.style.display = 'none';
+                }
+            });
+        }
     }
     </script>
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+        <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
 </body>
 </html>

@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Create a log file
-$logFile = __DIR__ . '/offer_debug.log';
+$logFile = __DIR__ . '/custom_order_debug.log';
 file_put_contents($logFile, date('Y-m-d H:i:s') . " - Script started\n", FILE_APPEND);
 
 function logError($message) {
@@ -74,9 +74,9 @@ try {
     $conn->query("START TRANSACTION");
     logError("Transaction started");
 
-    // Insert the offer message
+    // Insert the custom order message
     $message = json_encode([
-        'type' => 'offer',
+        'type' => 'custom_order',
         'amount' => $amount,
         'description' => $description,
         'delivery_time' => $delivery_time,
@@ -85,7 +85,7 @@ try {
 
     logError("Prepared message: " . $message);
 
-    $stmt = $conn->prepare("INSERT INTO messages (sender_id, receiver_id, message, message_type, created_at) VALUES (?, ?, ?, 'offer', NOW())");
+    $stmt = $conn->prepare("INSERT INTO messages (sender_id, receiver_id, message, message_type, created_at) VALUES (?, ?, ?, 'custom_order', NOW())");
     
     if (!$stmt) {
         throw new Exception("Failed to prepare statement: " . $conn->error);
@@ -116,4 +116,4 @@ try {
         'success' => false, 
         'message' => 'Database error: ' . $e->getMessage()
     ]);
-} 
+}

@@ -18,8 +18,8 @@ html {
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #fdf1ef;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9;
     color: #333;
 }
 
@@ -40,7 +40,7 @@ header {
 
 header h1 {
     font-size: 2.5em;
-    color: #8a3342
+    color: #6c63ff;
 }
 
 header p {
@@ -63,7 +63,7 @@ header p {
 .faq-question {
     font-size: 1.3em;
     font-weight: bold;
-    color: #8a3342
+    color: #6c63ff;
 }
 
 .faq-answer {

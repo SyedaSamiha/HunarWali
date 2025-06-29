@@ -1,3 +1,23 @@
+/* Import the same font as index-new.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #6c63ff;
+    --primary-rgb: 108, 99, 255;
+    --secondary-color: #ff6584;
+    --secondary-rgb: 255, 101, 132;
+    --accent-color: #43cea2;
+    --text-color: #333;
+    --light-text: #666;
+    --lighter-text: #999;
+    --background-color: #f9f9f9;
+    --white: #ffffff;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    --hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    --border-radius: 12px;
+    --transition: all 0.3s ease;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -74,19 +94,21 @@ li {
     font-size: 15px;
     font-weight: bold;
     text-transform: uppercase;
-    color:#e96958;
-    background-color: #fdf1ef; /* Button background color */
-    border: 2px solid #fdf1ef; /* Border color */
-    border-radius: 30px; /* Rounded corners */
+    color: var(--white);
+    background-color: var(--primary-color); /* Button background color */
+    border: 2px solid var(--primary-color); /* Border color */
+    border-radius: 50px; /* Rounded corners */
     cursor: pointer;
     outline: none;
-    transition: all 0.3s ease;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
 }
 /* Hover effect for the button */
 #contact-btn:hover {
-    background-color: #2c3e50; /* Button color on hover */
-    color: #ffffff; /* Text color on hover */
-    border-color: #f09a38; /* Border color on hover */
+    background-color: transparent; /* Button color on hover */
+    color: var(--primary-color); /* Text color on hover */
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(108, 99, 255, 0.4);
 }
 
 a {

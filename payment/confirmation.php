@@ -118,7 +118,7 @@ if ($payment_success) {
                     </div>
                     <div class="detail-row">
                         <span>Amount:</span>
-                        <span id="amount">Rs. <?php echo number_format($gig['gig_pricing']); ?> PKR</span>
+                        <span id="amount">PKR <?php echo number_format($gig['gig_pricing']); ?></span>
                     </div>
                     <div class="detail-row">
                         <span>Date & Time:</span>
@@ -154,7 +154,7 @@ if ($payment_success) {
             <div class="receipt-details">
                 <p><strong>Payment Method:</strong> <span id="receipt-method"><?php echo htmlspecialchars($payment_method); ?></span></p>
                 <p><strong>Transaction ID:</strong> <span id="receipt-txid"><?php echo htmlspecialchars($transaction_id); ?></span></p>
-                <p><strong>Amount:</strong> <span id="receipt-amount">Rs. <?php echo number_format($gig['gig_pricing']); ?> PKR</span></p>
+                <p><strong>Amount:</strong> <span id="receipt-amount">PKR <?php echo number_format($gig['gig_pricing']); ?></span></p>
                 <p><strong>Date & Time:</strong> <span id="receipt-datetime"><?php echo htmlspecialchars($date_time); ?></span></p>
             </div>
             <div class="receipt-footer">

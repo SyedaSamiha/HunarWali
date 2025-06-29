@@ -80,7 +80,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Password mismatch check
     if ($password !== $confirm_password) {
-        $_SESSION['message'] = "Passwords do not match.";
+        $_SESSION['message'] = "Passwords do not match. Please ensure both passwords are identical.";
+        header("Location: index.php");
+        exit();
+    }
+    
+    // Password strength validation
+    if (strlen($password) < 8) {
+        $_SESSION['message'] = "Password must be at least 8 characters long.";
         header("Location: index.php");
         exit();
     }
@@ -91,12 +98,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // Password strength check
-    if (strlen($password) < 8) {
-        $_SESSION['message'] = "Password must be at least 8 characters long.";
-        header("Location: index.php");
-        exit();
-    }
+    // Additional password strength checks could be added here if needed
+    // For example, requiring special characters, numbers, etc.
 
     // Email format validation
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {

@@ -103,7 +103,7 @@ while ($row = $result->fetch_assoc()) {
                                 <div class="form-group">
                                     <label for="gig-price"><i class="fas fa-tags"></i> PRICING</label>
                                     <div class="pricing-input">
-                                        <span class="currency-symbol">$</span>
+                                        <span class="currency-symbol">PKR</span>
                                         <input type="number" id="gig-price" name="gig-price" min="1" step="0.01" placeholder="Enter your base price" required>
                                     </div>
                                 </div>

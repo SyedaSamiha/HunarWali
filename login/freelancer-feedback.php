@@ -180,7 +180,7 @@ $has_feedback = $feedback_result->num_rows > 0;
                             <strong>Client:</strong> <?php echo htmlspecialchars($order['buyer_name']); ?>
                         </div>
                         <div class="col-md-6">
-                            <strong>Amount:</strong> $<?php echo number_format($order['price'], 2); ?><br>
+                            <strong>Amount:</strong> PKR <?php echo number_format($order['price'], 2); ?><br>
                             <strong>Status:</strong> <span class="badge bg-success">Completed</span><br>
                             <strong>Date:</strong> <?php echo date('M d, Y', strtotime($order['created_at'])); ?>
                         </div>
@@ -303,4 +303,4 @@ $has_feedback = $feedback_result->num_rows > 0;
         });
     </script>
 </body>
-</html> 
+</html>

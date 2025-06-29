@@ -230,11 +230,12 @@ textarea {
     position: absolute;
     left: 10px;
     color: #666;
+    font-size: 14px;
 }
 
 .pricing-input input {
     width: 100%;
-    padding: 10px 10px 10px 25px;
+    padding: 10px 10px 10px 45px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 14px;

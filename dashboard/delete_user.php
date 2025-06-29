@@ -204,9 +204,7 @@ if (isset($_POST['confirm_delete'])) {
             <li class="nav-item">
                 <a class="nav-link" href="services.php"><i class="fas fa-cogs"></i> Services</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="members.php"><i class="fas fa-users"></i> Members</a>
-            </li>
+
             <li class="nav-item mt-4">
                 <a class="nav-link" href="/Login/index.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </li>
@@ -276,4 +274,4 @@ if (isset($_POST['confirm_delete'])) {
         });
     </script>
 </body>
-</html> 
+</html>

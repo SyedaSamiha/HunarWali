@@ -15,7 +15,7 @@
                     <div class="footer-links">
                         <h3>SUPPORT</h3>
                         <ul>
-                            <li><a href="#">How It Works</a></li><br>
+                            <li><a href="/how-it-works/index.php">How It Works</a></li><br>
                             <li><a href="/faqs/faq.php">FAQ's</a></li><br>
                             <li><a href="/tos/index.php">Terms of Service</a></li><br>
                         </ul>

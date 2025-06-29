@@ -9,6 +9,8 @@ if (!isset($_SESSION['user_id']) || !isset($_GET['user_id'])) {
 $current_user_id = $_SESSION['user_id'];
 $other_user_id = $_GET['user_id'];
 
+// No need to mark messages as read anymore
+
 try {
     $query = "SELECT m.*, u.username, u.profile_picture 
               FROM messages m 
@@ -27,33 +29,41 @@ try {
         $message_class = $is_sent ? 'sent' : 'received';
         $timestamp = date('g:i A', strtotime($message['created_at']));
         
-        echo '<div class="message ' . $message_class . '">';
+        echo '<div class="message ' . $message_class . '" data-message-id="' . $message['id'] . '" data-message-type="' . $message['message_type'] . '">';
         echo '<div class="message-content">';
         
-        if ($message['message_type'] === 'offer') {
-            // Parse the offer JSON
-            $offerData = json_decode($message['message'], true);
-            if ($offerData) {
-                echo '<div class="offer-message">';
-                echo '<h6 class="offer-title"><i class="fas fa-handshake"></i> Offer Details</h6>';
-                echo '<div class="offer-details">';
-                echo '<p><strong>Amount:</strong> PKR ' . number_format($offerData['amount'], 2) . '</p>';
-                echo '<p><strong>Description:</strong> ' . htmlspecialchars($offerData['description']) . '</p>';
-                echo '<p><strong>Delivery Time:</strong> ' . $offerData['delivery_time'] . ' days</p>';
+        if ($message['message_type'] === 'custom_order' || $message['message_type'] === 'offer') {
+            // Parse the JSON message
+            $orderData = json_decode($message['message'], true);
+            if ($orderData) {
+                echo '<div class="order-message">';
                 
-                // Show offer status
-                $status = $offerData['status'] ?? 'pending';
-                if ($status === 'pending' && !$is_sent) {
-                    echo '<div class="offer-actions">';
-                    echo '<button class="btn btn-success btn-sm me-2" onclick="respondToOffer(' . $message['id'] . ', \'accept\')">Accept</button>';
-                    echo '<button class="btn btn-danger btn-sm" onclick="respondToOffer(' . $message['id'] . ', \'decline\')">Decline</button>';
-                    echo '</div>';
+                // Set title based on message type
+                if ($message['message_type'] === 'offer') {
+                    echo '<h6 class="order-title"><i class="fas fa-tag"></i> Offer Details</h6>';
                 } else {
-                    echo '<p class="offer-status"><strong>Status:</strong> ' . ucfirst($status) . '</p>';
+                    echo '<h6 class="order-title"><i class="fas fa-handshake"></i> Custom Order Details</h6>';
                 }
                 
-                echo '</div>'; // .offer-details
-                echo '</div>'; // .offer-message
+                echo '<div class="order-details">';
+                echo '<p><strong>Amount:</strong> PKR ' . number_format($orderData['amount'], 2) . '</p>';
+                echo '<p><strong>Description:</strong> ' . htmlspecialchars($orderData['description']) . '</p>';
+                echo '<p><strong>Delivery Time:</strong> ' . $orderData['delivery_time'] . ' days</p>';
+                
+                // Show order status
+                $status = $orderData['status'] ?? 'pending';
+                if ($status === 'pending' && !$is_sent) {
+                    echo '<div class="order-actions">';
+                    // Replace lines 57-58 with:
+                    echo '<button class="btn btn-success btn-sm me-2" onclick="window.respondToOrder ? respondToOrder(' . $message['id'] . ', \'accept\') : respondToCustomOrder(' . $message['id'] . ', \'accept\')">Accept</button>';
+                    echo '<button class="btn btn-danger btn-sm" onclick="window.respondToOrder ? respondToOrder(' . $message['id'] . ', \'decline\') : respondToCustomOrder(' . $message['id'] . ', \'decline\')">Decline</button>';
+                    echo '</div>';
+                } else {
+                    echo '<p class="order-status"><strong>Status:</strong> ' . ucfirst($status) . '</p>';
+                }
+                
+                echo '</div>'; // .order-details
+                echo '</div>'; // .order-message
             }
         } else {
             // Display regular message text if not empty
@@ -100,22 +110,64 @@ try {
 ?>
 
 <script>
-function respondToOffer(messageId, response) {
-    const formData = new FormData();
-    formData.append('message_id', messageId);
-    formData.append('response', response);
-
-    fetch('respond_to_offer.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            loadChat(selectedUserId);
-        } else {
-            alert('Failed to respond to offer: ' + data.message);
+// Make the function available in the global scope
+window.respondToOrder = function(messageId, response) {
+    if (confirm('Are you sure you want to ' + response + ' this order?')) {
+        // Check if loading spinner exists before trying to show it
+        const loadingSpinner = document.getElementById('loading-spinner');
+        if (loadingSpinner) {
+            loadingSpinner.style.display = 'flex';
         }
-    });
+        
+        // Determine which endpoint to use based on the message type
+        const messageElement = document.querySelector(`[data-message-id="${messageId}"]`);
+        const messageType = messageElement ? messageElement.getAttribute('data-message-type') : 'custom_order';
+        
+        const endpoint = messageType === 'offer' ? 'respond_to_offer.php' : 'respond_to_custom_order.php';
+        
+        fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'message_id=' + messageId + '&response=' + response
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Reload the chat to show the updated order status
+                if (typeof loadChat === 'function') {
+                    // Try different variables that might contain the user ID
+                    if (typeof currentReceiverId !== 'undefined') {
+                        loadChat(currentReceiverId);
+                    } else if (typeof selectedUserId !== 'undefined') {
+                        loadChat(selectedUserId);
+                    } else if (typeof receiverId !== 'undefined') {
+                        loadChat(receiverId);
+                    } else {
+                        // If no chat loading function is available, reload the page
+                        window.location.reload();
+                    }
+                } else {
+                    // If no chat loading function is available, reload the page
+                    window.location.reload();
+                }
+            } else {
+                alert('Error: ' + data.message);
+            }
+            // Hide loading spinner if it exists
+            if (loadingSpinner) {
+                loadingSpinner.style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+            // Hide loading spinner if it exists
+            if (loadingSpinner) {
+                loadingSpinner.style.display = 'none';
+            }
+        });
+    }
 }
 </script>

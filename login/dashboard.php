@@ -160,6 +160,7 @@ if (!isset($_SESSION['user_id'])) {
                     <!-- <a href="dashboard.php?page=analytics" class="<?php echo (isset($_GET['page']) && $_GET['page'] === 'analytics') ? 'active' : ''; ?>"><i class="fas fa-chart-bar me-2"></i> Analytics</a> -->
                     <a href="dashboard.php?page=messages" class="<?php echo (isset($_GET['page']) && $_GET['page'] === 'messages') ? 'active' : ''; ?>"><i class="fas fa-envelope me-2"></i> Messages</a>
                     <!-- <a href="dashboard.php?page=settings" class="<?php echo (isset($_GET['page']) && $_GET['page'] === 'settings') ? 'active' : ''; ?>"><i class="fas fa-cog me-2"></i> Settings</a> -->
+                    <a href="../index.php"><i class="fas fa-arrow-left me-2"></i> Back to Main Site</a>
                     <a href="logout.php"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
                 </nav>
             </div>
@@ -220,6 +221,13 @@ if (!isset($_SESSION['user_id'])) {
                 }
                 ?>
             </div>
+        </div>
+    </div>
+
+    <!-- Add this right before the closing body tag -->
+    <div id="loading-spinner" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+        <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
         </div>
     </div>
 

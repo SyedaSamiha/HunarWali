@@ -1,13 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
 :root {
-    --primary-color: #ff6b6b;
-    --secondary-color: #4a90e2;
-    --text-color: #2c3e50;
+    --primary-color: #6c63ff;
+    --primary-rgb: 108, 99, 255;
+    --secondary-color: #ff6584;
+    --secondary-rgb: 255, 101, 132;
+    --accent-color: #43cea2;
+    --text-color: #333;
     --light-text: #666;
+    --lighter-text: #999;
+    --background-color: #f9f9f9;
     --background-light: #f9f9f9;
     --white: #ffffff;
-    --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    --hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    --border-radius: 12px;
     --transition: all 0.3s ease;
 }
 
@@ -71,7 +78,7 @@ main {
 
 .about-content h1 {
     font-size: 2.8rem;
-    color: #8a3342;
+    color: var(--primary-color);
     margin-bottom: 1rem;
     font-weight: 700;
     letter-spacing: 1px;
@@ -212,4 +219,4 @@ main {
     .mission, .vision {
         padding: 1.5rem;
     }
-} 
+}

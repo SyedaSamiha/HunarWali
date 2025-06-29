@@ -114,7 +114,7 @@ $total_services = $services_result->fetch_assoc()['total_services'];
                     <i class="fas fa-hand-holding-usd"></i>
                 </div>
                 <h5 class="card-title">Total Earnings</h5>
-                <p class="card-text display-6">$<?php echo number_format($total_earnings, 2); ?></p>
+                <p class="card-text display-6">PKR <?php echo number_format($total_earnings, 2); ?></p>
             </div>
         </div>
     </div>
@@ -168,4 +168,4 @@ function time_elapsed_string($datetime) {
         return 'just now';
     }
 }
-?> 
+?>

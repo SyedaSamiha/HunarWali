@@ -1,3 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #6c63ff;
+    --primary-rgb: 108, 99, 255;
+    --secondary-color: #ff6584;
+    --secondary-rgb: 255, 101, 132;
+    --accent-color: #43cea2;
+    --text-color: #333;
+    --light-text: #666;
+    --lighter-text: #999;
+    --background-color: #f9f9f9;
+    --white: #ffffff;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    --hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    --border-radius: 12px;
+    --transition: all 0.3s ease;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -5,28 +24,36 @@
 }
 
 body {
-    padding: 0;
-    margin: 0;
-    min-height: 100vh; /* Ensures the body takes up the full height */
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    /* Ensures the body takes up the full height */
     display: flex;
-    flex-direction: column; /* Flexbox ensures the footer stays at the bottom */
+    flex-direction: column;
+    /* Flexbox ensures the footer stays at the bottom */
 }
 
 /* Navbar Styling */
 .navbar {
     height: 80px;
     width: 100%;
-    background-color: #fde1c1;
-    color: #e96958;
+    background-color: var(--white);
+    color: var(--primary-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 2rem;
     position: sticky;
-    top: 0; /* Ensures the navbar sticks at the top of the page */
-    z-index: 1000; /* Ensures the navbar stays above other elements while scrolling */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds a shadow for better visibility */
-    transition: background-color 0.3s; /* Optional: Transition effect for background color change */
+    top: 0;
+    /* Ensures the navbar sticks at the top of the page */
+    z-index: 1000;
+    /* Ensures the navbar stays above other elements while scrolling */
+    box-shadow: var(--shadow);
+    /* Adds a shadow for better visibility */
+    transition: var(--transition);
+    /* Transition effect for background color change */
 }
 
 .nav_logo {
@@ -47,83 +74,166 @@ li {
 
 a {
     text-decoration: none;
-    color: #e96958;
-    font-size: 20px;
+    color: var(--text-color);
+    transition: var(--transition);
 }
 
 .nav-content {
     display: flex;
-    gap: 20px;
-    font-weight: 600;
+    gap: 2rem;
+    font-weight: 500;
+}
+
+.nav-content a {
+    font-size: 1.1rem;
+    position: relative;
+}
+
+.nav-content a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.nav-content a:hover::after,
+.nav-content a.active::after {
+    width: 100%;
 }
 
 .navbar .contact-btn {
     margin-left: auto;
 }
+
 #contact-btn {
-    padding: 10px 15px;
+    padding: 12px 24px;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 600;
     text-transform: uppercase;
-    color:#e96958;
-    background-color: #f0cca3; /* Button background color */
-    border: 2px solid #f5bb79; /* Border color */
-    border-radius: 30px; /* Rounded corners */
+    color: var(--white);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    border-radius: 30px;
     cursor: pointer;
     outline: none;
-    transition: all 0.3s ease;
-}
-/* Hover effect for the button */
-#contact-btn:hover {
-    background-color: #e8ae6c; /* Button color on hover */
-    color: #e3321a; /* Text color on hover */
-    border-color: #f09a38; /* Border color on hover */
-}
-h2 {
-    font-size: 45px; /* Increased heading size */
-    margin-bottom: 20px;
-    color: #8a3342;
-    text-align: center;
+    transition: var(--transition);
+    box-shadow: 0 4px 10px rgba(var(--primary-rgb), 0.3);
 }
 
+/* Hover effect for the button */
+#contact-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(var(--primary-rgb), 0.4);
+}
+
+.services-section {
+    padding: 80px 0;
+    position: relative;
+    background-color: var(--background-color);
+}
+
+.services-section h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.services-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    border-radius: 2px;
+}
+
+
+.service-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
 
 /* Updated styling for the service cards to fit 4 boxes in one row and 3 in another */
 .service-cards {
     display: flex;
     justify-content: center;
-    gap: 15px; /* Space between the boxes */
-    flex-wrap: wrap; /* Allow wrapping of items to the next line */
-    margin-top: 10px;
+    gap: 20px;
+    /* Space between the boxes */
+    flex-wrap: wrap;
+    /* Allow wrapping of items to the next line */
+    margin-top: 20px;
 }
 
 /* Styling for the service cards */
 .service-card {
-    background-color: #eabd8c;
-    padding: 50px; /* Increased padding for larger boxes */
-    width: 300px; /* Adjusted width for 4 boxes in one row */
-    height: 350px; /* Increased height for larger boxes */
-    border-radius: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--white);
+    padding: 30px;
+    width: 300px;
+    height: 350px;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
     text-align: center;
-    color: #8a3342;
+    color: var(--text-color);
     text-decoration: none;
-    margin-bottom: 20px; /* Space between rows */
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Hover effect for the service cards */
 .service-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--hover-shadow);
+    border-color: rgba(var(--primary-rgb), 0.2);
+}
+
+.service-card .icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.service-card .icon i {
+    font-size: 1.8rem;
+    color: var(--white);
 }
 
 /* Adjust font sizes for headings and paragraphs */
 .service-card h3 {
-    font-size: 24px;
+    font-size: 1.3rem;
+    font-weight: 600;
     margin-bottom: 15px;
+    color: var(--text-color);
 }
 
 .service-card p {
-    font-size: 16px;
+    font-size: 0.95rem;
+    color: var(--light-text);
+    line-height: 1.5;
 }
 
 /* Responsive Design */
@@ -140,11 +250,12 @@ h2 {
 
 /* Footer Styling */
 .footer {
-    background-color: #e6dca9;
-    color: #406286;
-    padding: 40px 20px;
+    background-color: #2d2b55;
+    color: var(--white);
+    padding: 60px 20px 40px;
     font-size: 14px;
-    margin-top: auto; /* Ensures it stays at the bottom of the page */
+    margin-top: auto;
+    /* Ensures it stays at the bottom of the page */
 }
 
 .footer-section {
@@ -170,23 +281,61 @@ h2 {
 
 .footer-links a {
     text-decoration: none;
-    color: #406286;
+    color: rgba(255, 255, 255, 0.8);
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    color: var(--secondary-color);
 }
 
 .footer-brand h3 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--white);
     font-size: 18px;
+    transition: var(--transition);
+}
+
+.social-icons a:hover {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    transform: translateY(-3px);
 }
 
 .footer-bottom {
     text-align: center;
-    padding-top: 10px;
-    font-size: 12px;
+    padding-top: 20px;
+    font-size: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 30px;
 }
 
 /* Adjusting layout for smaller screens */
 @media (max-width: 768px) {
     .services {
-        flex-direction: column; /* Stack the service cards */
+        flex-direction: column;
+        /* Stack the service cards */
     }
 
     .service-card {

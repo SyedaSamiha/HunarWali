@@ -51,26 +51,49 @@ try {
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #FF6B6B;
+            --secondary-color: #4ECDC4;
+            --dark-color: #2C3E50;
+            --light-color: #F7F9FC;
+            --accent-color: #FFE66D;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-color);
+        }
+
         .sidebar {
             min-height: 100vh;
-            background-color: #343a40;
+            background-color: var(--dark-color);
             padding-top: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
         }
+
+        .sidebar h3 {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
         .sidebar a {
             color: #fff;
             text-decoration: none;
-            padding: 10px 15px;
+            padding: 12px 20px;
             display: block;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+            margin: 5px 10px;
         }
+
         .sidebar a:hover {
-            background-color: #495057;
+            background-color: var(--primary-color);
+            transform: translateX(5px);
         }
-        .sidebar a.active {
-            background-color: #0d6efd;
-        }
-        .sidebar i {
-            margin-right: 10px;
+
+        .sidebar .active {
+            background-color: var(--primary-color);
         }
         .content {
             padding: 20px;
@@ -249,7 +272,7 @@ try {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
         .message-attachment i {
             font-size: 1.2em;
@@ -282,17 +305,17 @@ try {
         .message.sent .message-time {
             color: rgba(255,255,255,0.8);
         }
-        .offer-message {
+        .order-message {
             background-color: rgba(0,0,0,0.03);
             border-radius: 12px;
             padding: 15px;
             margin: -12px -18px;
         }
-        .message.sent .offer-message {
+        .message.sent .order-message {
             background-color: rgba(255,255,255,0.1);
             color: white;
         }
-        .offer-title {
+        .order-title {
             font-size: 1rem;
             margin-bottom: 12px;
             display: flex;
@@ -300,24 +323,24 @@ try {
             gap: 8px;
             color: inherit;
         }
-        .offer-details {
-            font-size: 0.9rem;
+        .order-details {
+            font-size: 0.95rem;
         }
-        .offer-details p {
+        .order-details p {
             margin-bottom: 8px;
         }
-        .offer-actions {
+        .order-actions {
             margin-top: 15px;
             display: flex;
             gap: 10px;
         }
-        .offer-status {
+        .order-status {
             margin-top: 12px;
             padding-top: 12px;
             border-top: 1px solid rgba(0,0,0,0.1);
             font-size: 0.9rem;
         }
-        .message.sent .offer-status {
+        .message.sent .order-status {
             border-top-color: rgba(255,255,255,0.2);
         }
         .btn-sm {
@@ -325,26 +348,26 @@ try {
             font-size: 0.875rem;
             border-radius: 15px;
         }
-        .chat-input .btn-offer {
+        .chat-input .btn-order {
             background-color: #28a745;
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 8px 20px;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             transition: all 0.2s ease;
             height: 42px;
         }
-        .chat-input .btn-offer:hover {
+        .chat-input .btn-order:hover {
             background-color: #218838;
             transform: translateY(-1px);
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .chat-input .btn-offer i {
-            font-size: 1.1rem;
+        .chat-input .btn-order i {
+            font-size: 1.2rem;
         }
         /* Modal Styles */
         .modal-content {
@@ -400,13 +423,13 @@ try {
         .modal .btn-secondary {
             background-color: #6c757d;
             border: none;
-            border-radius: 20px;
+            border-radius: 4px;
             padding: 8px 20px;
         }
         .modal .btn-primary {
             background-color: #28a745;
             border: none;
-            border-radius: 20px;
+            border-radius: 4px;
             padding: 8px 20px;
         }
         .modal .btn-primary:hover {
@@ -426,6 +449,14 @@ try {
         }
     </style>
 </head>
+<!-- Add this right before the closing body tag -->
+<div id="loading-spinner" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+    <div class="spinner-border text-light" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+</body>
+</html>
 <body>
     <div class="container-fluid">
         <div class="row">
@@ -441,6 +472,9 @@ try {
                     </a>
                     <a href="messages.php" class="active">
                         <i class="fas fa-envelope"></i> Messages
+                    </a>
+                    <a href="../index.php">
+                        <i class="fas fa-home"></i> Back to Main Site
                     </a>
                     <a href="logout.php" class="mt-5">
                         <i class="fas fa-sign-out-alt"></i> Sign Out
@@ -514,9 +548,9 @@ try {
                                         </label>
                                         <input type="file" class="d-none" id="fileInput" name="attachment" accept="image/*,.pdf,.doc,.docx">
                                     </div>
-                                    <button type="button" class="btn btn-offer me-2" id="sendOfferBtn">
+                                    <button type="button" class="btn btn-order me-2" id="sendOrderBtn">
                                         <i class="fas fa-handshake"></i>
-                                        <span>Send Offer</span>
+                                       
                                     </button>
                                     <button type="submit" class="btn btn-primary">
                                         <i class="fas fa-paper-plane"></i>
@@ -530,30 +564,30 @@ try {
         </div>
     </div>
 
-    <!-- Offer Modal -->
-    <div class="modal fade" id="offerModal" tabindex="-1" aria-labelledby="offerModalLabel" aria-hidden="true">
+    <!-- Custom Order Modal -->
+    <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="offerModalLabel">
+                    <h5 class="modal-title" id="orderModalLabel">
                         <i class="fas fa-handshake"></i>
-                        Send Offer
+                        Custom Order
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="offerForm">
-                        <input type="hidden" id="offer_receiver_id" name="receiver_id">
+                    <form id="orderForm">
+                        <input type="hidden" id="order_receiver_id" name="receiver_id">
                         <div class="mb-3">
-                            <label for="offerAmount" class="form-label">Offer Amount</label>
+                            <label for="orderAmount" class="form-label">Order Amount</label>
                             <div class="input-group">
                                 <span class="input-group-text">PKR</span>
-                                <input type="number" class="form-control" id="offerAmount" name="amount" required min="1" step="0.01" placeholder="Enter amount">
+                                <input type="number" class="form-control" id="orderAmount" name="amount" required min="1" step="0.01" placeholder="Enter amount">
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="offerDescription" class="form-label">Description</label>
-                            <textarea class="form-control" id="offerDescription" name="description" rows="3" required placeholder="Describe your offer details"></textarea>
+                            <label for="orderDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="orderDescription" name="description" rows="3" required placeholder="Describe your custom order details"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="deliveryTime" class="form-label">Delivery Time</label>
@@ -566,7 +600,7 @@ try {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="submitOffer">Send Offer</button>
+                    <button type="button" class="btn btn-primary" id="submitOrder">Submit Order</button>
                 </div>
             </div>
         </div>
@@ -576,34 +610,43 @@ try {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     let selectedUserId = null;
-    const offerModal = new bootstrap.Modal(document.getElementById('offerModal'));
+    const orderModal = new bootstrap.Modal(document.getElementById('orderModal'));
+    
+
 
     document.addEventListener('DOMContentLoaded', function() {
+        
         // User click handler
         document.querySelectorAll('.user-item').forEach(function(item) {
             item.addEventListener('click', function() {
-                document.querySelectorAll('.user-item').forEach(i => i.classList.remove('active'));
+                document.querySelectorAll('.user-item').forEach(el => el.classList.remove('active'));
                 this.classList.add('active');
                 selectedUserId = this.getAttribute('data-user-id');
                 document.getElementById('receiver_id').value = selectedUserId;
-                document.getElementById('offer_receiver_id').value = selectedUserId;
+                document.getElementById('order_receiver_id').value = selectedUserId;
                 loadChat(selectedUserId);
             });
         });
+        
+        // Auto-select first user if available
+        const firstUser = document.querySelector('.user-item');
+        if (firstUser) {
+            firstUser.click();
+        }
 
-        // Send Offer button click handler
-        document.getElementById('sendOfferBtn').addEventListener('click', function() {
+        // Custom Order button click handler
+        document.getElementById('sendOrderBtn').addEventListener('click', function() {
             if (!selectedUserId) {
                 alert('Please select a user first');
                 return;
             }
-            document.getElementById('offer_receiver_id').value = selectedUserId;
-            offerModal.show();
+            document.getElementById('order_receiver_id').value = selectedUserId;
+            orderModal.show();
         });
 
-        // Submit Offer handler
-        document.getElementById('submitOffer').addEventListener('click', function() {
-            const form = document.getElementById('offerForm');
+        // Submit Custom Order handler
+        document.getElementById('submitOrder').addEventListener('click', function() {
+            const form = document.getElementById('orderForm');
             const formData = new FormData(form);
 
             // Validate form
@@ -613,11 +656,11 @@ try {
             }
 
             // Disable submit button to prevent double submission
-            const submitButton = document.getElementById('submitOffer');
+            const submitButton = document.getElementById('submitOrder');
             submitButton.disabled = true;
             submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
 
-            fetch('../chat-screen/send_offer.php', {
+            fetch('../chat-screen/send_custom_order.php', {
                 method: 'POST',
                 body: formData
             })
@@ -629,21 +672,21 @@ try {
             })
             .then(data => {
                 if (data.success) {
-                    offerModal.hide();
+                    orderModal.hide();
                     form.reset();
                     loadChat(selectedUserId);
                 } else {
-                    alert('Failed to send offer: ' + (data.message || 'Unknown error occurred'));
+                    alert('Failed to submit custom order: ' + (data.message || 'Unknown error occurred'));
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('An error occurred while sending the offer. Please try again.');
+                alert('An error occurred while submitting the custom order. Please try again.');
             })
             .finally(() => {
                 // Re-enable submit button
                 submitButton.disabled = false;
-                submitButton.innerHTML = 'Send Offer';
+                submitButton.innerHTML = 'Submit Order';
             });
         });
 
@@ -733,6 +776,24 @@ try {
                     document.querySelector('.chat-header .user-status').textContent = 'Online';
                     document.querySelector('.chat-header img').src = userImage;
                     
+                    // Add data-message-type attribute to all messages
+                    document.querySelectorAll('.message').forEach(message => {
+                        if (!message.hasAttribute('data-message-type')) {
+                            // Check if it contains an order-message div
+                            if (message.querySelector('.order-message')) {
+                                // Check if it's an offer or custom order
+                                const titleElement = message.querySelector('.order-title');
+                                if (titleElement && titleElement.textContent.includes('Offer')) {
+                                    message.setAttribute('data-message-type', 'offer');
+                                } else {
+                                    message.setAttribute('data-message-type', 'custom_order');
+                                }
+                            } else {
+                                message.setAttribute('data-message-type', 'text');
+                            }
+                        }
+                    });
+                    
                     // Scroll to bottom of chat
                     const chatMessages = document.querySelector('.chat-messages');
                     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -812,29 +873,35 @@ try {
             }
         });
 
-        // Add offer response handler
-        function respondToOffer(messageId, response) {
-            fetch('../chat-screen/respond_to_offer.php', {
+        // Add custom order response handler
+        function respondToOrder(messageId, response) {
+            // Determine which endpoint to use based on the message type
+            const messageElement = document.querySelector(`[data-message-id="${messageId}"]`);
+            const messageType = messageElement ? messageElement.getAttribute('data-message-type') : 'custom_order';
+            
+            const endpoint = messageType === 'offer' ? '../chat-screen/respond_to_offer.php' : '../chat-screen/respond_to_custom_order.php';
+            
+            fetch(endpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 body: 'message_id=' + messageId + '&response=' + response
             })
-            .then(response => response.text())
-            .then(result => {
-                if (result === 'success') {
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
                     loadChat(document.getElementById('receiver_id').value);
                 } else {
-                    alert('Failed to respond to offer: ' + result);
+                    alert('Error: ' + data.message);
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('An error occurred while responding to the offer');
+                alert('An error occurred while responding to the order');
             });
         }
     });
     </script>
 </body>
-</html> 
+</html>

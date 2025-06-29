@@ -244,17 +244,17 @@
                     <tr>
                         <td>Basic Cleaning</td>
                         <td>2-3 hours</td>
-                        <td>$100-$150</td>
+                        <td>PKR 100-PKR 150</td>
                     </tr>
                     <tr>
                         <td>Deep Cleaning</td>
                         <td>4-6 hours</td>
-                        <td>$200-$300</td>
+                        <td>PKR 200-PKR 300</td>
                     </tr>
                     <tr>
                         <td>Move In/Out</td>
                         <td>6-8 hours</td>
-                        <td>$300-$400</td>
+                        <td>PKR 300-PKR 400</td>
                     </tr>
                     <tr>
                         <td>Commercial Cleaning</td>

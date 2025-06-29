@@ -130,6 +130,9 @@ $result = $stmt->get_result();
                                     while ($row = $result->fetch_assoc()) {
                                         $status_class = '';
                                         switch (strtolower($row['status'])) {
+                                            case 'order placed':
+                                                $status_class = 'bg-warning';
+                                                break;
                                             case 'pending':
                                                 $status_class = 'bg-warning';
                                                 break;
@@ -165,7 +168,7 @@ $result = $stmt->get_result();
                                             <td>#<?php echo $row['id']; ?></td>
                                             <td><?php echo htmlspecialchars($row['gig_title']); ?></td>
                                             <td><?php echo htmlspecialchars($row['buyer_name']); ?></td>
-                                            <td>$<?php echo number_format($row['price'], 2); ?></td>
+                                            <td>PKR <?php echo number_format($row['price'], 2); ?></td>
                                             <td><span class="badge <?php echo $status_class; ?>"><?php echo ucfirst(str_replace('_', ' ', $row['status'])); ?></span></td>
                                             <td><?php echo $feedback_badge; ?></td>
                                             <td><?php echo date('M d, Y', strtotime($row['created_at'])); ?></td>
@@ -253,4 +256,4 @@ function updateOrderStatus(orderId, status) {
 function provideFeedback(orderId) {
     window.location.href = 'freelancer-feedback.php?order_id=' + orderId;
 }
-</script> 
+</script>

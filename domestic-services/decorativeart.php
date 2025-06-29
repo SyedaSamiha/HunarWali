@@ -210,17 +210,17 @@
                     <tr>
                         <td>Custom Wall Art</td>
                         <td>Hand-painted canvas or mural</td>
-                        <td>$200-$1000</td>
+                        <td>PKR 200-PKR 1000</td>
                     </tr>
                     <tr>
                         <td>Home Décor Pieces</td>
                         <td>Custom sculptures and installations</td>
-                        <td>$150-$800</td>
+                        <td>PKR 150-PKR 800</td>
                     </tr>
                     <tr>
                         <td>Event Decoration</td>
                         <td>Full venue artistic transformation</td>
-                        <td>$500-$2000</td>
+                        <td>PKR 500-PKR 2000</td>
                     </tr>
                     <tr>
                         <td>Corporate Art</td>

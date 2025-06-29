@@ -322,9 +322,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
                                 <a href="admin.php" class="btn btn-outline-primary">
                                     <i class="fas fa-users"></i> View All Users
                                 </a>
-                                <a href="members.php" class="btn btn-outline-info">
-                                    <i class="fas fa-list"></i> Members List
-                                </a>
+
                             </div>
                         </div>
                     </div>
@@ -402,4 +400,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
         });
     </script>
 </body>
-</html> 
+</html>

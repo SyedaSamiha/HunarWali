@@ -1,6 +1,6 @@
 body {
-    background: #f9fadf;
-    font-family: 'Montserrat', Arial, sans-serif;
+    background: #f9f9f9;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -10,7 +10,7 @@ body {
     margin: 80px auto;
     background: #fff;
     border-radius: 12px;
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
     padding: 40px 30px 30px 30px;
     text-align: center;
 }
@@ -20,6 +20,7 @@ body {
     font-weight: bold;
     margin-bottom: 10px;
     letter-spacing: 1px;
+    color: #6c63ff;
 }
 
 .newsletter-container p {
@@ -44,18 +45,21 @@ body {
 }
 
 #subscribe-btn {
-    background: #f7a89a;
-    color: #222;
+    background: #6c63ff;
+    color: #fff;
     border: none;
     padding: 12px 28px;
-    border-radius: 25px;
+    border-radius: 12px;
     font-size: 1rem;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px rgba(108, 99, 255, 0.4);
 }
 
 #subscribe-btn:hover {
-    background: #e68b7b;
+    background: #5650cc;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.5);
 }
 
 #message {

@@ -68,7 +68,7 @@ $freelancerFeedback = $feedbackStmt->get_result()->fetch_assoc();
                     <h5>Service Information</h5>
                     <p><strong>Service:</strong> <?php echo htmlspecialchars($order['gig_title']); ?></p>
                     <p><strong>Description:</strong> <?php echo htmlspecialchars($order['gig_description']); ?></p>
-                    <p><strong>Price:</strong> $<?php echo number_format($order['price'], 2); ?></p>
+                    <p><strong>Price:</strong> PKR <?php echo number_format($order['price'], 2); ?></p>
                 </div>
                 <div class="col-md-6">
                     <h5>Client Information</h5>
@@ -201,8 +201,11 @@ $freelancerFeedback = $feedbackStmt->get_result()->fetch_assoc();
                     </button>
                 <?php endif; ?>
                 
-                <a href="dashboard.php?page=orders" class="btn btn-secondary">
+                <a href="dashboard.php?page=orders" class="btn btn-secondary me-2">
                     <i class="fas fa-arrow-left me-2"></i>Back to Orders
+                </a>
+                <a href="../index.php" class="btn btn-secondary">
+                    <i class="fas fa-home me-2"></i>Back to Main Site
                 </a>
             </div>
         </div>
@@ -236,4 +239,4 @@ function updateOrderStatus(orderId, status) {
         });
     }
 }
-</script> 
+</script>

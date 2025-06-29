@@ -3,22 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Login - HunarWali</title>
+    <link rel="stylesheet" href="modern-style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom JavaScript -->
+    <script src="modern-login.js" defer></script>
 </head>
 <body>
+    <div class="back-to-home">
+        <a href="/"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    </div>
+    
     <div class="image">
         <div class="login-container">
             <div class="form-container">
                 <h1>LOGIN</h1>
-                <p>Please enter your login details</p>
+                <p>Welcome back! Please enter your login details</p>
 
                 <!-- Login Form -->
                 <form method="POST" action="login.php" id="login-form">
-                    <input type="email" id="email" name="email" placeholder="EMAIL" required>
-                    <input type="password" id="password" name="password" placeholder="PASSWORD" required>
-                    <button type="submit" id="submit-button">LOGIN</button>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" name="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" placeholder="Password" required>
+                        <i class="fas fa-eye-slash toggle-password"></i>
+                    </div>
+                    <button type="submit" id="submit-button"><i class="fas fa-sign-in-alt"></i> LOGIN</button>
                 </form>
+                
+                <div class="register-link">
+                    Don't have an account? <a href="/registration/index.php">Register Now</a>
+                </div>
 
                 <!-- Display error message from session -->
                 <?php
@@ -29,81 +48,7 @@
                 }
                 ?>
 
-                <!-- Add this to your HTML page -->
-                <script>
-                    window.onload = function() {
-                        const message = document.querySelector('.animated-message');
-                        if (message) {
-                            setTimeout(function() {
-                                message.style.display = 'none';  // Hide the message after 4 seconds
-                            }, 4000);
-                        }
-
-                        // Add form validation
-                        const form = document.getElementById('login-form');
-                        form.addEventListener('submit', function(e) {
-                            const email = document.getElementById('email').value;
-                            const password = document.getElementById('password').value;
-                            
-                            if (!email || !password) {
-                                e.preventDefault();
-                                const errorMessage = document.createElement('p');
-                                errorMessage.className = 'animated-message';
-                                errorMessage.textContent = 'Please fill in all fields.';
-                                
-                                // Remove any existing error message
-                                const existingMessage = document.querySelector('.animated-message');
-                                if (existingMessage) {
-                                    existingMessage.remove();
-                                }
-                                
-                                // Add the new error message
-                                form.insertAdjacentElement('beforebegin', errorMessage);
-                                
-                                // Hide the message after 4 seconds
-                                setTimeout(function() {
-                                    errorMessage.style.display = 'none';
-                                }, 4000);
-                            }
-                        });
-                    };
-                </script>
-
-                <!-- CSS for animation -->
-                <style>
-                    /* Styling for the message */
-                    .animated-message {
-                        color: #e74c3c;
-                        font-size: 0.95rem;
-                        font-weight: 500;
-                        background-color: rgba(231, 76, 60, 0.1);
-                        padding: 12px 20px;
-                        border-radius: 8px;
-                        margin: 10px 0;
-                        text-align: center;
-                        animation: fadeInOut 4s ease-in-out forwards;
-                    }
-
-                    /* Animation for fade-in and fade-out */
-                    @keyframes fadeInOut {
-                        0% {
-                            opacity: 0;
-                            transform: translateY(-10px);
-                        }
-                        20% {
-                            opacity: 1;
-                            transform: translateY(0);
-                        }
-                        80% {
-                            opacity: 1;
-                            transform: translateY(0);
-                        }
-                        100% {
-                            opacity: 0;
-                            transform: translateY(10px);
-                        }
-                    }
-                </style>
+                <!-- The styling for animated-message is now in modern-style.css -->
             </div>
         </div>
     </div>

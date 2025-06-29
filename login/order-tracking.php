@@ -66,8 +66,11 @@ $is_buyer = ($order['buyer_id'] == $user_id);
         <h2><i class="fas fa-truck me-2"></i>Order Tracking #<?php echo $order_id; ?></h2>
         <p>Track the progress of your order in real-time</p>
         <div class="mt-3">
-            <a href="dashboard.php?page=orders" class="btn btn-outline-light">
+            <a href="dashboard.php?page=orders" class="btn btn-outline-light me-2">
                 <i class="fas fa-arrow-left me-2"></i>Back to Orders
+            </a>
+            <a href="../index.php" class="btn btn-outline-light">
+                <i class="fas fa-home me-2"></i>Back to Main Site
             </a>
         </div>
     </div>
@@ -80,7 +83,7 @@ $is_buyer = ($order['buyer_id'] == $user_id);
                     <h5 class="card-title"><i class="fas fa-info-circle me-2"></i>Order Information</h5>
                     <p><strong>Service:</strong> <?php echo htmlspecialchars($order['gig_title']); ?></p>
                     <p><strong>Description:</strong> <?php echo htmlspecialchars($order['gig_description']); ?></p>
-                    <p><strong>Price:</strong> $<?php echo number_format($order['price'], 2); ?></p>
+                    <p><strong>Price:</strong> PKR <?php echo number_format($order['price'], 2); ?></p>
                     <p><strong>Order Date:</strong> <?php echo date('M d, Y H:i', strtotime($order['created_at'])); ?></p>
                 </div>
             </div>
@@ -320,4 +323,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-</script> 
+</script>

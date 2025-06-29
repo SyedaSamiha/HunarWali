@@ -125,7 +125,7 @@ $page_title = "Edit Gig";
                         </div>
 
                         <div class="mb-3">
-                            <label for="gig_pricing" class="form-label">Price ($)</label>
+                            <label for="gig_pricing" class="form-label">Price (PKR)</label>
                             <input type="number" class="form-control" id="gig_pricing" name="gig_pricing" step="0.01" min="0" value="<?php echo $gig['gig_pricing']; ?>" required>
                         </div>
 
@@ -178,4 +178,4 @@ document.getElementById('service_id').addEventListener('change', function() {
         subServiceSelect.innerHTML = '<option value="">First select a service category</option>';
     }
 });
-</script> 
+</script>
