@@ -153,7 +153,6 @@ if ($_SESSION['role'] != 'admin') {
                                     <td>{$row['created_at']}</td>
                                     <td class='action-buttons'>
                                         <a href='edit_service.php?id={$row['id']}' class='btn btn-sm btn-warning'><i class='fas fa-edit'></i> Edit</a>
-                                        <a href='delete_service.php?id={$row['id']}' class='btn btn-sm btn-danger'><i class='fas fa-trash'></i> Delete</a>
                                     </td>
                                 </tr>";
                         }

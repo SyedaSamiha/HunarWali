@@ -23,13 +23,16 @@ $order_id = (int)$_GET['id'];
 $user_id = $_SESSION['user_id'];
 
 // Get order details with gig and seller information
-$query = "SELECT o.*, g.gig_title, g.gig_description, g.user_id as seller_id,
+$query = "SELECT o.*, 
+          CASE WHEN g.gig_title IS NULL THEN 'Custom Order' ELSE g.gig_title END as gig_title, 
+          CASE WHEN g.gig_description IS NULL THEN o.description ELSE g.gig_description END as gig_description, 
+          CASE WHEN g.user_id IS NULL THEN o.seller_id ELSE g.user_id END as seller_id,
           u.username as buyer_name, u.email as buyer_email,
           s.username as seller_name, s.email as seller_email
           FROM orders o
-          JOIN gigs g ON o.gig_id = g.id
+          LEFT JOIN gigs g ON o.gig_id = g.id
           JOIN users u ON o.buyer_id = u.id
-          JOIN users s ON g.user_id = s.id
+          JOIN users s ON o.seller_id = s.id
           WHERE o.id = ? AND o.buyer_id = ?";
 
 $stmt = $conn->prepare($query);
@@ -41,6 +44,30 @@ $order = $result->fetch_assoc();
 if (!$order) {
     header('Location: ordered-services.php');
     exit();
+}
+
+// Get order tracking history
+// Check if there are any tracking entries for this order
+$check_tracking_query = "SELECT COUNT(*) as count FROM order_tracking WHERE order_id = ?";
+$check_tracking_stmt = $conn->prepare($check_tracking_query);
+if ($check_tracking_stmt === false) {
+    die("Error preparing check tracking query: " . $conn->error);
+}
+$check_tracking_stmt->bind_param("i", $order_id);
+$check_tracking_stmt->execute();
+$check_result = $check_tracking_stmt->get_result();
+$tracking_count = $check_result->fetch_assoc()['count'];
+
+// If no tracking entries exist, create an initial one based on the order's current status
+if ($tracking_count == 0) {
+    $initial_description = "Order was placed";
+    $insert_tracking_query = "INSERT INTO order_tracking (order_id, status, description, updated_by) VALUES (?, ?, ?, ?)";
+    $insert_tracking_stmt = $conn->prepare($insert_tracking_query);
+    if ($insert_tracking_stmt === false) {
+        die("Error preparing insert tracking query: " . $conn->error);
+    }
+    $insert_tracking_stmt->bind_param("issi", $order_id, $order['status'], $initial_description, $order['seller_id']);
+    $insert_tracking_stmt->execute();
 }
 
 // Get order tracking history

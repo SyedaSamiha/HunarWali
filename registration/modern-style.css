@@ -45,7 +45,7 @@ body {
 }
 
 .image {
-    background-image: url('registrationbg.jpg');
+    background-image: url('../login/bgimage.jpg');
     height: 100vh;
     background-size: cover;
     background-position: center;
@@ -85,7 +85,7 @@ body {
     width: 90%;
     max-width: 600px;
     padding: 40px;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(255, 255, 255, 0.95);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-lg);
     text-align: center;
@@ -111,7 +111,7 @@ body {
 
 .form-container h1 {
     font-size: 2.5rem;
-    color: #ffffff;
+    color: var(--primary-color);
     margin-bottom: 15px;
     font-weight: 700;
     position: relative;
@@ -142,7 +142,7 @@ body {
 
 .form-container p {
     font-size: 1.1rem;
-    color: #ffffff;
+    color: var(--light-text);
     margin-bottom: 30px;
     animation: fadeIn 1s ease-out forwards;
     animation-delay: 0.3s;
@@ -165,8 +165,8 @@ input, select {
     border: 2px solid #e1e1e1;
     font-size: 1rem;
     transition: var(--transition);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #ffffff;
+    background-color: var(--white);
+    color: var(--text-color);
     box-shadow: var(--shadow-xs);
 }
 
@@ -195,9 +195,9 @@ select:nth-of-type(2) {
 }
 
 input:focus, select:focus {
-    border-color: #ff0000;
+    border-color: var(--primary-color);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.3);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
     transform: translateY(-2px);
 }
 
@@ -208,20 +208,20 @@ select {
     background-position: right 15px center;
     background-size: 15px;
     padding-right: 40px;
-    color: #ffffff;
+    color: var(--text-color);
 }
 
 select option {
-    color: #333333;
+    color: var(--text-color);
 }
 
 button {
     width: 100%;
     padding: 14px;
-    background: linear-gradient(to right, #000000, #333333);
-    border: 2px solid #ff0000;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    border: none;
     border-radius: var(--border-radius);
-    color: #ff0000;
+    color: white;
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
@@ -290,7 +290,7 @@ button:active {
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: #ff0000;
+    color: var(--light-text);
     font-size: 1.1rem;
     transition: var(--transition);
 }
@@ -300,7 +300,7 @@ button:active {
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: #ff0000;
+    color: var(--light-text);
     font-size: 1.1rem;
     cursor: pointer;
     transition: var(--transition);
@@ -308,11 +308,11 @@ button:active {
 }
 
 .input-group .toggle-password:hover, .input-group .toggle-confirm-password:hover {
-    color: #ff3333;
+    color: var(--primary-color);
 }
 
 .input-group:focus-within i:first-child {
-    color: #ff3333;
+    color: var(--primary-color);
 }
 
 /* ID Upload Container */
@@ -327,23 +327,37 @@ button:active {
 .id-upload-container label {
     display: block;
     margin-bottom: 8px;
-    color: #ffffff;
+    color: var(--text-color);
     font-weight: 500;
+}
+
+.id-preview {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    min-height: 100px;
+    border: 2px dashed var(--primary-color);
+    border-radius: var(--border-radius);
+    padding: 10px;
+    background-color: rgba(var(--primary-rgb), 0.05);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition);
 }
 
 /* File input styling */
 input[type="file"] {
     padding: 10px 10px 10px 10px;
-    background-color: rgba(0, 0, 0, 0.5);
-    border: 2px dashed #ff0000;
+    background-color: rgba(var(--primary-rgb), 0.05);
+    border: 2px dashed var(--primary-color);
     border-radius: var(--border-radius);
     cursor: pointer;
     transition: var(--transition);
-    color: #ffffff;
+    color: var(--text-color);
 }
 
 input[type="file"]:hover {
-    background-color: rgba(255, 0, 0, 0.2);
+    background-color: rgba(var(--primary-rgb), 0.1);
 }
 
 /* Error state for file inputs */
@@ -440,21 +454,21 @@ input[type="file"].input-error,
 .login-link {
     margin-top: 20px;
     font-size: 0.95rem;
-    color: #ffffff;
+    color: var(--light-text);
     animation: fadeIn 0.5s ease-out forwards;
     animation-delay: 1.3s;
     opacity: 0;
 }
 
 .login-link a {
-    color: #ff0000;
+    color: var(--primary-color);
     text-decoration: none;
     font-weight: 600;
     transition: var(--transition);
 }
 
 .login-link a:hover {
-    color: #ff3333;
+    color: var(--secondary-color);
     text-decoration: underline;
 }
 
@@ -465,7 +479,7 @@ input[type="file"].input-error,
     left: 20px;
     z-index: 10;
     animation: fadeIn 0.5s ease-out forwards;
-    animation-delay: 1.4s;
+    animation-delay: 1.2s;
     opacity: 0;
 }
 

@@ -27,7 +27,7 @@ if ($result->num_rows == 0) {
         seller_id INT(11) NOT NULL,
         gig_id INT(11) NOT NULL,
         price DECIMAL(10,2) NOT NULL,
-        status ENUM('Order Placed', 'In Progress', 'Pending Review', 'Completed') NOT NULL DEFAULT 'Order Placed',
+        status ENUM('Order Placed', 'In Progress', 'Completed') NOT NULL DEFAULT 'Order Placed',
         created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (id),
         KEY buyer_id (buyer_id),

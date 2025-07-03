@@ -3,31 +3,50 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-echo "Testing Fix for 'Prepare failed for INSERT' Error\n\n";
+// Function to log messages with timestamp and color coding
+function log_message($message, $type = 'info') {
+    $prefix = "";
+    switch ($type) {
+        case 'success':
+            $prefix = "\033[32m[SUCCESS]\033[0m ";
+            break;
+        case 'error':
+            $prefix = "\033[31m[ERROR]\033[0m ";
+            break;
+        case 'warning':
+            $prefix = "\033[33m[WARNING]\033[0m ";
+            break;
+        default:
+            $prefix = "\033[36m[INFO]\033[0m ";
+    }
+    echo $prefix . "[" . date('Y-m-d H:i:s') . "] $message\n";
+}
+
+log_message("Testing Fix for 'Prepare failed for INSERT' Error", 'info');
 
 // Include database connection
 require_once __DIR__ . '/config/database.php';
 
-echo "Connected to database successfully.\n";
+log_message("Connected to database successfully.", 'success');
 
 // Check if orders table exists
 $result = $conn->query("SHOW TABLES LIKE 'orders'");
 if ($result->num_rows == 0) {
-    echo "Orders table does not exist!\n";
+    log_message("Orders table does not exist!", 'error');
     exit;
 }
 
-echo "Orders table exists. Checking structure...\n";
+log_message("Orders table exists. Checking structure...", 'info');
 
 // Check table structure
 $result = $conn->query("DESCRIBE orders");
-echo "Table Structure:\n";
+log_message("Table Structure:", 'info');
 while ($row = $result->fetch_assoc()) {
-    echo "Field: {$row['Field']}, Type: {$row['Type']}, Null: {$row['Null']}, Key: {$row['Key']}, Default: {$row['Default']}, Extra: {$row['Extra']}\n";
+    log_message("  Field: {$row['Field']}, Type: {$row['Type']}, Null: {$row['Null']}, Key: {$row['Key']}, Default: {$row['Default']}, Extra: {$row['Extra']}");
 }
 
 // Test the INSERT statement that was failing
-echo "\nTesting INSERT Statement:\n";
+log_message("\nTesting INSERT Statement:", 'info');
 
 try {
     // Start transaction
@@ -39,24 +58,24 @@ try {
     $amount = 100.50;
     $description = "Test description";
     
-    echo "Preparing INSERT statement...\n";
+    log_message("Preparing INSERT statement...", 'info');
     
     // This is the fixed INSERT statement
     $stmt = $conn->prepare("INSERT INTO orders (buyer_id, seller_id, gig_id, price, description, status) VALUES (?, ?, 0, ?, ?, 'Order Placed')");
     
     if (!$stmt) {
-        echo "Prepare failed: " . $conn->error . "\n";
+        log_message("Prepare failed: " . $conn->error, 'error');
     } else {
-        echo "Prepare successful!\n";
+        log_message("Prepare successful!", 'success');
         
-        echo "Binding parameters...\n";
+        log_message("Binding parameters...", 'info');
         $stmt->bind_param("iids", $sender_id, $receiver_id, $amount, $description);
         
-        echo "Executing statement...\n";
+        log_message("Executing statement...", 'info');
         if ($stmt->execute()) {
-            echo "Execute successful! The issue is fixed!\n";
+            log_message("Execute successful! The issue is fixed!", 'success');
         } else {
-            echo "Execute failed: " . $stmt->error . "\n";
+            log_message("Execute failed: " . $stmt->error, 'error');
         }
         
         $stmt->close();
@@ -64,50 +83,50 @@ try {
     
     // Rollback the transaction to avoid actually inserting data
     $conn->rollback();
-    echo "Transaction rolled back - test data not saved.\n";
+    log_message("Transaction rolled back - test data not saved.", 'info');
     
 } catch (Exception $e) {
     // Rollback transaction on error
     if ($conn) {
         $conn->rollback();
     }
-    echo "Error: " . $e->getMessage() . "\n";
+    log_message("Error: " . $e->getMessage(), 'error');
 }
 
 // Test the original PHP files
-echo "\nTesting Fixed PHP Files:\n";
+log_message("\nTesting Fixed PHP Files:", 'info');
 
 $login_file = __DIR__ . '/login/respond_to_custom_order.php';
 if (file_exists($login_file)) {
     $content = file_get_contents($login_file);
     if (strpos($content, "INSERT INTO orders (buyer_id, seller_id, gig_id, price, description, status)") !== false) {
-        echo "login/respond_to_custom_order.php has been fixed correctly.\n";
+        log_message("login/respond_to_custom_order.php has been fixed correctly.", 'success');
     } else {
-        echo "login/respond_to_custom_order.php may not be fixed correctly.\n";
+        log_message("login/respond_to_custom_order.php may not be fixed correctly.", 'warning');
     }
 } else {
-    echo "File login/respond_to_custom_order.php does not exist.\n";
+    log_message("File login/respond_to_custom_order.php does not exist.", 'error');
 }
 
 $chat_file = __DIR__ . '/chat-screen/respond_to_custom_order.php';
 if (file_exists($chat_file)) {
     $content = file_get_contents($chat_file);
     if (strpos($content, "INSERT INTO orders (buyer_id, seller_id, gig_id, price, description, status)") !== false) {
-        echo "chat-screen/respond_to_custom_order.php has been fixed correctly.\n";
+        log_message("chat-screen/respond_to_custom_order.php has been fixed correctly.", 'success');
     } else {
-        echo "chat-screen/respond_to_custom_order.php may not be fixed correctly.\n";
+        log_message("chat-screen/respond_to_custom_order.php may not be fixed correctly.", 'warning');
     }
 } else {
-    echo "File chat-screen/respond_to_custom_order.php does not exist.\n";
+    log_message("File chat-screen/respond_to_custom_order.php does not exist.", 'error');
 }
 
-echo "\nSummary:\n";
-echo "The 'Prepare failed for INSERT' error has been fixed by:\n";
-echo "1. Updating the database connection to use TCP/IP instead of socket\n";
-echo "2. Adding virtual columns 'client_id' and 'freelancer_id' as aliases for 'buyer_id' and 'seller_id'\n";
-echo "3. Updating the INSERT statements in the PHP files to match the actual table structure\n";
+log_message("\nSummary:", 'info');
+log_message("The 'Prepare failed for INSERT' error has been fixed by:", 'success');
+log_message("1. Updating the database connection to use TCP/IP instead of socket", 'info');
+log_message("2. Adding virtual columns 'client_id' and 'freelancer_id' as aliases for 'buyer_id' and 'seller_id'", 'info');
+log_message("3. Updating the INSERT statements in the PHP files to match the actual table structure", 'info');
 
-echo "\nThe application should now work correctly.\n";
+log_message("\nThe application should now work correctly.", 'success');
 
 $conn->close();
 ?>

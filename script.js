@@ -115,29 +115,50 @@ document.addEventListener('DOMContentLoaded', function() {
     const tabContents = document.querySelectorAll('.tab-content');
 
     if (tabBtns.length > 0 && tabContents.length > 0) {
-        // Set first tab as active by default
-        tabBtns[0].classList.add('active');
-        tabContents[0].classList.add('active');
-        
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                // Remove active class from all buttons and contents
-                tabBtns.forEach(b => b.classList.remove('active'));
-                tabContents.forEach(content => content.classList.remove('active'));
+        // Function to initialize tabs
+        function initializeTabs() {
+            // Set first tab as active by default if none are active
+            if (!document.querySelector('.tab-btn.active')) {
+                tabBtns[0].classList.add('active');
+                tabContents[0].classList.add('active');
+            }
+            
+            // Add click event listeners to all tab buttons
+            tabBtns.forEach(btn => {
+                // Remove any existing event listeners first to prevent duplicates
+                const newBtn = btn.cloneNode(true);
+                btn.parentNode.replaceChild(newBtn, btn);
                 
-                // Add active class to clicked button
-                this.classList.add('active');
-                
-                // Show corresponding content
-                const tabId = this.getAttribute('data-tab');
-                const tabContent = document.getElementById(tabId);
-                if (tabContent) {
-                    tabContent.classList.add('active');
-                } else {
-                    console.error('Tab content not found for ID:', tabId);
-                }
+                newBtn.addEventListener('click', function() {
+                    // First, get fresh references to all tab buttons and contents
+                    const allTabBtns = document.querySelectorAll('.tab-btn');
+                    const allTabContents = document.querySelectorAll('.tab-content');
+                    
+                    // Remove active class from all buttons and contents
+                    allTabBtns.forEach(b => b.classList.remove('active'));
+                    allTabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked button only
+                    this.classList.add('active');
+                    
+                    // Show corresponding content
+                    const tabId = this.getAttribute('data-tab');
+                    const tabContent = document.getElementById(tabId);
+                    if (tabContent) {
+                        tabContent.classList.add('active');
+                    } else {
+                        console.error('Tab content not found for ID:', tabId);
+                    }
+                });
             });
-        });
+        }
+        
+        // Initialize tabs when page loads
+        initializeTabs();
+        
+        // Re-initialize tabs when DOM changes (for dynamic content)
+        const observer = new MutationObserver(initializeTabs);
+        observer.observe(document.querySelector('.services-tabs'), { childList: true, subtree: true });
     }
     
     // Feature card hover effects
@@ -202,8 +223,5 @@ document.addEventListener('DOMContentLoaded', function() {
                 card.style.boxShadow = '0 5px 15px rgba(0,0,0,0.05)';
             });
         });
-    }
-    
-
     }
 });

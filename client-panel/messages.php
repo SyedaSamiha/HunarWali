@@ -13,6 +13,69 @@ if (!isset($_SESSION['user_id'])) {
 
 $currentUserId = $_SESSION['user_id'];
 
+// Function to initiate chat with seller
+function initiateChat($conn, $buyer_id, $seller_id, $gig_id = null) {
+    // Check if messages already exist between these users
+    $check_query = "SELECT 1 FROM messages WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?) LIMIT 1";
+    $check_stmt = $conn->prepare($check_query);
+    if (!$check_stmt) {
+        // Log the error for debugging
+        error_log("Prepare failed for message check: (" . $conn->errno . ") " . $conn->error);
+        return false;
+    }
+    $check_stmt->bind_param('iiii', $buyer_id, $seller_id, $seller_id, $buyer_id);
+    
+    if (!$check_stmt->execute()) {
+        error_log("Execute failed for message check: (" . $check_stmt->errno . ") " . $check_stmt->error);
+        return false;
+    }
+    $result = $check_stmt->get_result();
+    
+    // If no messages exist, we'll create the first one
+    // We'll return true to indicate success, and the actual message will be created in the calling code
+    if ($result->num_rows == 0) {
+        return true;
+    } else {
+        // Messages already exist between these users
+        return true;
+    }
+}
+
+// Handle chat initiation
+if (isset($_POST['start_chat']) && isset($_POST['seller_id'])) {
+    $seller_id = $_POST['seller_id'];
+    $gig_id = isset($_POST['gig_id']) ? $_POST['gig_id'] : null;
+    
+    // Check if initiateChat is successful (meaning we can proceed with sending a message)
+    if (initiateChat($conn, $currentUserId, $seller_id, $gig_id)) {
+        // Add initial message
+        $message = "Hey, I'm interested in your service";
+        if ($gig_id) {
+            $message .= " (Gig ID: $gig_id)";
+        }
+        
+        $message_query = "INSERT INTO messages (sender_id, receiver_id, message, created_at) VALUES (?, ?, ?, NOW())";
+        $message_stmt = $conn->prepare($message_query);
+        
+        if (!$message_stmt) {
+            error_log("Prepare failed for message insert: (" . $conn->errno . ") " . $conn->error);
+            echo "<div class='alert alert-danger'>Failed to send message. Please try again later.</div>";
+        } else {
+            $message_stmt->bind_param('iis', $currentUserId, $seller_id, $message);
+            if ($message_stmt->execute()) {
+                // Message sent successfully
+                echo "<div class='alert alert-success'>Message sent successfully!</div>";
+            } else {
+                error_log("Execute failed for message insert: (" . $message_stmt->errno . ") " . $message_stmt->error);
+                echo "<div class='alert alert-danger'>Failed to send message. Please try again later.</div>";
+            }
+        }
+    } else {
+        error_log("Failed to initiate chat between user $currentUserId and seller $seller_id");
+        echo "<div class='alert alert-danger'>Failed to initiate chat. Please try again later.</div>";
+    }
+}
+
 try {
     // Modified query to use mysqli and include profile_picture
     $query = "SELECT DISTINCT u.id, u.username, u.profile_picture 

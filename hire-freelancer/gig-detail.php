@@ -50,8 +50,12 @@ if (isset($_POST['start_chat']) && isset($_SESSION['user_id'])) {
         $message_stmt->bind_param('iis', $chat_id, $_SESSION['user_id'], $message);
         $message_stmt->execute();
     }
-    // Redirect to chat screen
-    header("Location: /login/dashboard.php?page=messages");
+    // Redirect to chat screen based on user role
+    if (isset($_SESSION['role']) && $_SESSION['role'] == 'freelancer') {
+        header("Location: /login/dashboard.php?page=messages");
+    } else {
+        header("Location: /client-panel/messages.php");
+    }
     exit;
 }
 
@@ -768,11 +772,16 @@ if ($totalReviews > 0) {
                         ?>
                     </ul>
                     <a href="/payment/index.php?gig_id=<?php echo $gig['id']; ?>" class="order-btn" style="text-decoration: none; display: block; text-align: center;"><i class="fas fa-shopping-cart"></i> Continue</a>
-                    <form method="POST" action="/login/dashboard.php?page=messages" style="margin-top: 0.5rem;">
-                        <input type="hidden" name="start_chat" value="1">
-                        <input type="hidden" name="seller_id" value="<?php echo $gig['user_id']; ?>">
-                        <button type="submit" class="chat-btn"><i class="fas fa-comments"></i> Chat with Seller</button>
-                    </form>
+                    <?php if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
+                        <button type="button" class="chat-btn" onclick="showAdminChatMessage()"><i class="fas fa-comments"></i> Chat with Seller</button>
+                    <?php else: ?>
+                        <form method="POST" action="<?php echo (isset($_SESSION['role']) && $_SESSION['role'] == 'freelancer') ? '/login/dashboard.php?page=messages' : '/client-panel/messages.php'; ?>" style="margin-top: 0.5rem;">
+                            <input type="hidden" name="start_chat" value="1">
+                            <input type="hidden" name="seller_id" value="<?php echo $gig['user_id']; ?>">
+                            <input type="hidden" name="gig_id" value="<?php echo $gig['id']; ?>">
+                            <button type="submit" class="chat-btn"><i class="fas fa-comments"></i> Chat with Seller</button>
+                        </form>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -869,6 +878,60 @@ if ($totalReviews > 0) {
             carouselContainer.addEventListener('mouseleave', () => {
                 autoSlideInterval = setInterval(nextImage, 5000);
             });
+            
+            // Function to show admin chat message popup
+            function showAdminChatMessage() {
+                // Create modal overlay
+                const overlay = document.createElement('div');
+                overlay.style.position = 'fixed';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.width = '100%';
+                overlay.style.height = '100%';
+                overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+                overlay.style.display = 'flex';
+                overlay.style.justifyContent = 'center';
+                overlay.style.alignItems = 'center';
+                overlay.style.zIndex = '1000';
+                
+                // Create modal content
+                const modal = document.createElement('div');
+                modal.style.backgroundColor = 'white';
+                modal.style.padding = '2rem';
+                modal.style.borderRadius = '8px';
+                modal.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+                modal.style.maxWidth = '400px';
+                modal.style.textAlign = 'center';
+                
+                // Add message
+                const message = document.createElement('p');
+                message.textContent = 'Only clients can chat with sellers.';
+                message.style.fontSize = '1.1rem';
+                message.style.marginBottom = '1.5rem';
+                message.style.color = '#333';
+                
+                // Add close button
+                const closeButton = document.createElement('button');
+                closeButton.textContent = 'Close';
+                closeButton.style.padding = '0.5rem 1.5rem';
+                closeButton.style.backgroundColor = '#8a3342';
+                closeButton.style.color = 'white';
+                closeButton.style.border = 'none';
+                closeButton.style.borderRadius = '4px';
+                closeButton.style.cursor = 'pointer';
+                closeButton.style.fontSize = '1rem';
+                
+                // Add event listener to close button
+                closeButton.addEventListener('click', () => {
+                    document.body.removeChild(overlay);
+                });
+                
+                // Append elements
+                modal.appendChild(message);
+                modal.appendChild(closeButton);
+                overlay.appendChild(modal);
+                document.body.appendChild(overlay);
+            }
         });
     </script>
 </body>

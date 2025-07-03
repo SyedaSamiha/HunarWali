@@ -189,13 +189,13 @@ if (!isset($_SESSION['user_id'])) {
                         $query = "
                             SELECT 
                                 o.id, 
-                                g.gig_title AS service_name, 
+                                CASE WHEN g.gig_title IS NOT NULL THEN g.gig_title ELSE 'Custom Order' END AS service_name, 
                                 o.created_at, 
                                 o.status, 
                                 u.username AS seller_username,
                                 CASE WHEN r.id IS NOT NULL THEN 1 ELSE 0 END as has_reviewed
                             FROM orders o
-                            JOIN gigs g ON o.gig_id = g.id
+                            LEFT JOIN gigs g ON o.gig_id = g.id
                             JOIN users u ON o.seller_id = u.id
                             LEFT JOIN reviews r ON r.order_id = o.id AND r.user_id = ?
                             WHERE o.buyer_id = ?
@@ -244,7 +244,6 @@ if (!isset($_SESSION['user_id'])) {
                                                             <select name="status" class="form-select form-select-sm" style="width: auto; display: inline-block;">
                                                                 <option value="Order Placed" <?php echo $order['status'] === 'Order Placed' ? 'selected' : ''; ?>>Order Placed</option>
                                                                 <option value="In Progress" <?php echo $order['status'] === 'In Progress' ? 'selected' : ''; ?>>In Progress</option>
-                                                                <option value="Pending Review" <?php echo $order['status'] === 'Pending Review' ? 'selected' : ''; ?>>Pending Review</option>
                                                                 <option value="Completed" <?php echo $order['status'] === 'Completed' ? 'selected' : ''; ?>>Completed</option>
                                                             </select>
                                                             <button type="submit" name="update_status" class="btn btn-primary btn-sm ms-2"><i class="fas fa-save"></i> Update</button>

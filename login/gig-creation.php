@@ -1,8 +1,8 @@
 <?php
-session_start();
+//session_start();
 
 // Ensure session cookie path is set to root
-ini_set('session.cookie_path', '/');
+//ini_set('session.cookie_path', '/');
 
 // Debug: Check if user_id is set
 if (!isset($_SESSION['user_id'])) {

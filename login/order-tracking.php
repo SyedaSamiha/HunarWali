@@ -41,6 +41,29 @@ if (!$order) {
     exit();
 }
 
+// Check if there are any tracking entries for this order
+$check_tracking_query = "SELECT COUNT(*) as count FROM order_tracking WHERE order_id = ?";
+$check_tracking_stmt = $conn->prepare($check_tracking_query);
+if ($check_tracking_stmt === false) {
+    die("Error preparing check tracking query: " . $conn->error);
+}
+$check_tracking_stmt->bind_param("i", $order_id);
+$check_tracking_stmt->execute();
+$check_result = $check_tracking_stmt->get_result();
+$tracking_count = $check_result->fetch_assoc()['count'];
+
+// If no tracking entries exist, create an initial one based on the order's current status
+if ($tracking_count == 0) {
+    $initial_description = "Order was placed";
+    $insert_tracking_query = "INSERT INTO order_tracking (order_id, status, description, updated_by) VALUES (?, ?, ?, ?)";
+    $insert_tracking_stmt = $conn->prepare($insert_tracking_query);
+    if ($insert_tracking_stmt === false) {
+        die("Error preparing insert tracking query: " . $conn->error);
+    }
+    $insert_tracking_stmt->bind_param("issi", $order_id, $order['status'], $initial_description, $order['freelancer_id']);
+    $insert_tracking_stmt->execute();
+}
+
 // Get order tracking history
 $tracking_query = "SELECT ot.*, u.username as updated_by_name
                   FROM order_tracking ot
@@ -184,42 +207,6 @@ $is_buyer = ($order['buyer_id'] == $user_id);
         </div>
     </div>
 
-    <!-- Update Status (for freelancers only) -->
-    <?php if ($is_freelancer && strtolower($order['status']) !== 'completed' && strtolower($order['status']) !== 'cancelled'): ?>
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title"><i class="fas fa-edit me-2"></i>Update Order Status</h5>
-                        <form id="updateStatusForm">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="newStatus" class="form-label">New Status</label>
-                                    <select class="form-select" id="newStatus" name="newStatus" required>
-                                        <?php if (strtolower($order['status']) === 'pending'): ?>
-                                            <option value="in_progress">In Progress</option>
-                                            <option value="completed">Completed</option>
-                                        <?php elseif (strtolower($order['status']) === 'in_progress'): ?>
-                                            <option value="completed">Completed</option>
-                                        <?php endif; ?>
-                                    </select>
-                                </div>
-                                <div class="col-md-8">
-                                    <label for="statusDescription" class="form-label">Description</label>
-                                    <textarea class="form-control" id="statusDescription" name="statusDescription" rows="2" placeholder="Add a description for this status update..." required></textarea>
-                                </div>
-                            </div>
-                            <div class="mt-3">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save me-2"></i>Update Status
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php endif; ?>
 </div>
 
 <style>

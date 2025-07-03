@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -158,7 +158,7 @@ $result = $stmt->get_result();
                                                     $feedback_badge = '<span class="badge bg-success"><i class="fas fa-star me-1"></i>You Reviewed</span>';
                                                     break;
                                                 case 'no_feedback':
-                                                    $feedback_badge = '<span class="badge bg-warning"><i class="fas fa-clock me-1"></i>Pending Review</span>';
+                                                    $feedback_badge = '<span class="badge bg-warning"><i class="fas fa-clock me-1"></i>Needs Review</span>';
                                                     break;
                                             }
                                         }

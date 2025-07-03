@@ -84,7 +84,7 @@ try {
     $stmt->bind_param("si", $updated_message, $message_id);
     $stmt->execute();
 
-    // If accepted, create the order
+    // Only create order if accepted
     if ($response === 'accept') {
         // Validate data before insertion
         if (!isset($message['sender_id']) || !isset($message['receiver_id']) || 

@@ -1,0 +1,112 @@
+2025-07-01 09:32:04 - Script started
+2025-07-01 09:32:04 - ERROR: Received POST data: Array
+(
+    [receiver_id] => 6
+    [amount] => 2121
+    [description] => fgedf
+    [delivery_time] => 2
+)
+
+2025-07-01 09:32:04 - ERROR: Database connection successful
+2025-07-01 09:32:04 - ERROR: Transaction started
+2025-07-01 09:32:04 - ERROR: Prepared message: {"type":"custom_order","amount":2121,"description":"fgedf","delivery_time":2,"status":"pending"}
+2025-07-01 09:32:04 - ERROR: Statement prepared successfully
+2025-07-01 09:32:04 - ERROR: Parameters bound successfully
+2025-07-01 09:32:04 - ERROR: Statement executed successfully
+2025-07-01 09:32:04 - ERROR: Transaction committed successfully
+2025-07-01 16:49:28 - Script started
+2025-07-01 16:49:28 - ERROR: Received POST data: Array
+(
+    [receiver_id] => 6
+    [amount] => 767
+    [description] => jiuytfghujik
+    [delivery_time] => 2
+)
+
+2025-07-01 16:49:28 - ERROR: Database connection successful
+2025-07-01 16:49:28 - ERROR: Transaction started
+2025-07-01 16:49:28 - ERROR: Prepared message: {"type":"custom_order","amount":767,"description":"jiuytfghujik","delivery_time":2,"status":"pending"}
+2025-07-01 16:49:28 - ERROR: Statement prepared successfully
+2025-07-01 16:49:28 - ERROR: Parameters bound successfully
+2025-07-01 16:49:28 - ERROR: Statement executed successfully
+2025-07-01 16:49:28 - ERROR: Transaction committed successfully
+2025-07-01 16:50:02 - Script started
+2025-07-01 16:50:02 - ERROR: Received POST data: Array
+(
+    [receiver_id] => 6
+    [amount] => 7678
+    [description] => sdfyi
+    [delivery_time] => 6
+)
+
+2025-07-01 16:50:02 - ERROR: Database connection successful
+2025-07-01 16:50:02 - ERROR: Transaction started
+2025-07-01 16:50:02 - ERROR: Prepared message: {"type":"custom_order","amount":7678,"description":"sdfyi","delivery_time":6,"status":"pending"}
+2025-07-01 16:50:02 - ERROR: Statement prepared successfully
+2025-07-01 16:50:02 - ERROR: Parameters bound successfully
+2025-07-01 16:50:02 - ERROR: Statement executed successfully
+2025-07-01 16:50:02 - ERROR: Transaction committed successfully
+2025-07-01 18:32:38 - Script started
+2025-07-01 18:32:38 - ERROR: Received POST data: Array
+(
+    [receiver_id] => 6
+    [amount] => 1220
+    [description] => dwasa
+    [delivery_time] => 12
+)
+
+2025-07-01 18:32:38 - ERROR: Database connection successful
+2025-07-01 18:32:38 - ERROR: Transaction started
+2025-07-01 18:32:38 - ERROR: Prepared message: {"type":"custom_order","amount":1220,"description":"dwasa","delivery_time":12,"status":"pending"}
+2025-07-01 18:32:38 - ERROR: Statement prepared successfully
+2025-07-01 18:32:38 - ERROR: Parameters bound successfully
+2025-07-01 18:32:38 - ERROR: Statement executed successfully
+2025-07-01 18:32:38 - ERROR: Transaction committed successfully
+2025-07-01 20:59:25 - Script started
+2025-07-01 20:59:25 - ERROR: Received POST data: Array
+(
+    [receiver_id] => 6
+    [amount] => 5000
+    [description] => Custom Order new
+    [delivery_time] => 5
+)
+
+2025-07-01 20:59:25 - ERROR: Database connection successful
+2025-07-01 20:59:25 - ERROR: Transaction started
+2025-07-01 20:59:25 - ERROR: Prepared message: {"type":"custom_order","amount":5000,"description":"Custom Order new","delivery_time":5,"status":"pending"}
+2025-07-01 20:59:25 - ERROR: Statement prepared successfully
+2025-07-01 20:59:25 - ERROR: Parameters bound successfully
+2025-07-01 20:59:25 - ERROR: Statement executed successfully
+2025-07-01 20:59:25 - ERROR: Transaction committed successfully
+2025-07-01 23:03:58 - Script started
+2025-07-01 23:03:58 - ERROR: Received POST data: Array
+(
+    [receiver_id] => 6
+    [amount] => 1222
+    [description] => ssdcas``
+    [delivery_time] => 213
+)
+
+2025-07-01 23:03:58 - ERROR: Database connection successful
+2025-07-01 23:03:58 - ERROR: Transaction started
+2025-07-01 23:03:58 - ERROR: Prepared message: {"type":"custom_order","amount":1222,"description":"ssdcas``","delivery_time":213,"status":"pending"}
+2025-07-01 23:03:58 - ERROR: Statement prepared successfully
+2025-07-01 23:03:58 - ERROR: Parameters bound successfully
+2025-07-01 23:03:58 - ERROR: Statement executed successfully
+2025-07-01 23:03:58 - ERROR: Transaction committed successfully
+2025-07-01 23:05:07 - Script started
+2025-07-01 23:05:07 - ERROR: Received POST data: Array
+(
+    [receiver_id] => 6
+    [amount] => 1222
+    [description] => wqdsfc
+    [delivery_time] => 1
+)
+
+2025-07-01 23:05:07 - ERROR: Database connection successful
+2025-07-01 23:05:07 - ERROR: Transaction started
+2025-07-01 23:05:07 - ERROR: Prepared message: {"type":"custom_order","amount":1222,"description":"wqdsfc","delivery_time":1,"status":"pending"}
+2025-07-01 23:05:07 - ERROR: Statement prepared successfully
+2025-07-01 23:05:07 - ERROR: Parameters bound successfully
+2025-07-01 23:05:07 - ERROR: Statement executed successfully
+2025-07-01 23:05:07 - ERROR: Transaction committed successfully

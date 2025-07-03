@@ -10,6 +10,12 @@ $query = "SELECT g.*, u.username AS seller_name, s.name AS service_name, ss.name
           LEFT JOIN sub_services ss ON g.sub_service_id = ss.id
           WHERE 1=1";
 
+// Exclude gigs that belong to the currently logged-in user
+if (isset($_SESSION['user_id'])) {
+    $logged_in_user_id = (int)$_SESSION['user_id']; // Cast to integer for security
+    $query .= " AND g.user_id != $logged_in_user_id";
+}
+
 // Handle search filter
 if (isset($_GET['search']) && !empty($_GET['search'])) {
     $search = $conn->real_escape_string($_GET['search']);

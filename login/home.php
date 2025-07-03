@@ -25,13 +25,13 @@ $chat_stmt->execute();
 $chat_result = $chat_stmt->get_result();
 $total_chats = $chat_result->fetch_assoc()['total_chats'];
 
-// Get total orders
-$order_query = "SELECT COUNT(*) as total_orders FROM orders WHERE buyer_id = ?";
+// Get total orders (both as buyer and seller)
+$order_query = "SELECT COUNT(*) as total_orders FROM orders WHERE buyer_id = ? OR seller_id = ?";
 $order_stmt = $conn->prepare($order_query);
 if ($order_stmt === false) {
     die("Error preparing order query: " . $conn->error);
 }
-$order_stmt->bind_param("i", $user_id);
+$order_stmt->bind_param("ii", $user_id, $user_id);
 $order_stmt->execute();
 $order_result = $order_stmt->get_result();
 $total_orders = $order_result->fetch_assoc()['total_orders'];

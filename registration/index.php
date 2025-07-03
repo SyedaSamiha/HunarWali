@@ -95,7 +95,7 @@
                 <div class="error-message-container">
                     <!-- Display error message from session -->
                     <?php
-                    session_start();
+                    // session_start();
                     if (isset($_SESSION['message'])) {
                         echo "<p class='animated-message'><i class='fas fa-exclamation-circle'></i> " . $_SESSION['message'] . "</p>";
                         unset($_SESSION['message']);  // Clear message after displaying it

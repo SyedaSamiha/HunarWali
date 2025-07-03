@@ -172,7 +172,7 @@ if (!isset($_SESSION['user_id'])) {
                                 u.username as seller_username,
                                 u.email as seller_email
                             FROM orders o
-                            JOIN gigs g ON o.gig_id = g.id
+                            LEFT JOIN gigs g ON o.gig_id = g.id
                             JOIN users u ON o.seller_id = u.id
                             WHERE o.id = ? AND (o.buyer_id = ? OR o.seller_id = ?)
                         ";
@@ -266,14 +266,20 @@ if (!isset($_SESSION['user_id'])) {
                             <div class="row mt-4">
                                 <div class="col-md-6">
                                     <h6>Service Details</h6>
-                                    <p><strong>Service Name:</strong> <?php echo htmlspecialchars($order['gig_title']); ?></p>
-                                    <p><strong>Description:</strong> <?php echo htmlspecialchars($order['gig_description']); ?></p>
+                                    <?php if ($order['gig_id']): ?>
+                                        <p><strong>Service Name:</strong> <?php echo htmlspecialchars($order['gig_title']); ?></p>
+                                        <p><strong>Description:</strong> <?php echo htmlspecialchars($order['gig_description']); ?></p>
+                                    <?php else: ?>
+                                        <p><strong>Service Name:</strong> Custom Order</p>
+                                        <p><strong>Description:</strong> <?php echo htmlspecialchars($order['description']); ?></p>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="col-md-6">
                                     <h6>Order Information</h6>
                                     <p><strong>Status:</strong> <?php echo htmlspecialchars($order['status']); ?></p>
                                     <p><strong>Order Date:</strong> <?php echo htmlspecialchars($order['created_at']); ?></p>
                                     <p><strong>Seller:</strong> <?php echo htmlspecialchars($order['seller_username']); ?></p>
+                                    <p><strong>Price:</strong> PKR <?php echo htmlspecialchars($order['price']); ?></p>
                                 </div>
                             </div>
                             

@@ -15,8 +15,10 @@ include 'head.php';
 <body>
     <header>
         <?php include 'navbar/navbar.php'; ?>
-
-            <!-- Hero Section -->
+    </header>
+    
+    <main>
+        <!-- Hero Section -->
             <section class="hero-section">
                 <div class="hero-background">
                     <div class="overlay"></div>
@@ -348,17 +350,32 @@ include 'head.php';
                                     <h3>Stay Connected</h3>
                                 </div>
                                 <p>Subscribe to our newsletter for the latest opportunities, success stories, and platform updates.</p>
-                                <form class="newsletter-form" action="subscribe.php" method="POST">
-                                    <div class="form-group">
-                                        <div class="input-container">
-                                            <i class="fas fa-envelope"></i>
-                                            <input type="email" name="email" placeholder="Enter your email" required>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="fas fa-paper-plane"></i> Subscribe
-                                        </button>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-primary" id="openSubscribeModal">
+                                        <i class="fas fa-paper-plane"></i> Subscribe
+                                    </button>
+                                </div>
+                                
+                                <!-- Newsletter Modal -->
+                                <div class="modal" id="subscribeModal">
+                                    <div class="modal-content">
+                                        <span class="close-modal">&times;</span>
+                                        <h3>Subscribe to Our Newsletter</h3>
+                                        <p>Stay updated with our latest opportunities and success stories.</p>
+                                        <form id="newsletterModalForm">
+                                            <div class="input-container modal-input">
+                                                <i class="fas fa-envelope"></i>
+                                                <input type="email" id="modalEmail" placeholder="Enter your email" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fas fa-paper-plane"></i> Subscribe
+                                            </button>
+                                        </form>
                                     </div>
-                                 </form>
+                                </div>
+                                
+                                <!-- Toast Notification -->
+                                <div id="toast" class="toast-notification">Subscribed to newsletter successfully!</div>
                              </div>
                          </div>
                      </div>
@@ -428,9 +445,66 @@ include 'head.php';
                 </div>
             </section>
 
-            <?php include 'footer/footer.php'; ?>
-        </header>
+    </main>
+
+    <footer>
+        <?php include 'footer/footer.php'; ?>
+    </footer>
+    
+    <script src="script.js"></script>
+    <script>
+        // Modal functionality
+        const modal = document.getElementById('subscribeModal');
+        const openModalBtn = document.getElementById('openSubscribeModal');
+        const closeModalBtn = document.querySelector('.close-modal');
+        const toast = document.getElementById('toast');
         
-        <script src="script.js"></script>
-    </body>
+        // Open modal
+        openModalBtn.addEventListener('click', function() {
+            modal.style.display = 'flex';
+        });
+        
+        // Close modal when clicking X
+        closeModalBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // Form submission
+        document.getElementById('newsletterModalForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('modalEmail').value;
+            
+            // AJAX request to subscribe.php
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'newsletter/subscribe.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Close modal
+                    modal.style.display = 'none';
+                    
+                    // Show toast notification
+                    toast.className = 'toast-notification show';
+                    
+                    // Hide toast after 3 seconds
+                    setTimeout(function() {
+                        toast.className = toast.className.replace('show', '');
+                    }, 3000);
+                    
+                    // Reset form
+                    document.getElementById('newsletterModalForm').reset();
+                }
+            };
+            xhr.send('email=' + encodeURIComponent(email));
+        });
+    </script>
+</body>
 </html>
