@@ -4,6 +4,7 @@
 :root {
     --primary-color: #6c63ff;
     --primary-rgb: 108, 99, 255;
+    --primary-dark: #2c3e50;
     --secondary-color: #ff6584;
     --secondary-rgb: 255, 101, 132;
     --accent-color: #43cea2;
@@ -254,8 +255,8 @@ section {
     display: flex;
     align-items: center;
     gap: 8px;
-    background-color: rgba(255, 255, 255, 0.15);
-    padding: 8px 12px;
+    background-color: #ffffff26;
+    padding: 14px 20px;
     border-radius: 50px;
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -267,7 +268,7 @@ section {
 }
 
 .feature-item span {
-    color: var(--white);
+    color: var(--black);
     font-weight: 500;
     font-size: 0.9rem;
 }
@@ -336,7 +337,7 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 160px;
+    height: 190px;
     justify-content: flex-start;
     border: 1px solid rgba(0, 0, 0, 0.05);
 }
@@ -890,6 +891,7 @@ section {
 .summary-card p {
     font-size: 1rem;
     margin-bottom: 30px;
+    color: var(--white);
     opacity: 0.9;
     line-height: 1.6;
 }
@@ -913,6 +915,7 @@ section {
 
 .summary-stat .stat-label {
     font-size: 0.9rem;
+    color: var(--white);
     opacity: 0.8;
 }
 
@@ -929,7 +932,7 @@ section {
     transform: translateY(-5px);
 }
 
-
+.trending-icon {
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1306,6 +1309,7 @@ section {
 .mission-card p {
     line-height: 1.8;
     margin-bottom: 20px;
+    color: var(--white);
     font-size: 1.05rem;
 }
 
@@ -1477,6 +1481,7 @@ section {
 
 .cta-content p {
     font-size: 1.2rem;
+    color: var(--white);
     margin-bottom: 30px;
     line-height: 1.6;
     opacity: 0.9;
@@ -1542,6 +1547,7 @@ section {
     font-size: 1.1rem;
     border-radius: 10px;
     transition: all 0.3s ease;
+    
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
@@ -1558,6 +1564,13 @@ section {
 .cta-buttons .btn-secondary {
     background: rgba(255, 255, 255, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--primary-dark);
+}
+
+.cta-buttons .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--primary-color);
 }
 
 .cta-badge-container {
@@ -1646,6 +1659,7 @@ section {
     
     .hero-features {
         justify-content: center;
+        color: black;
     }
     
     .stats-grid {

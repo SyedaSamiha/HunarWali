@@ -1,3 +1,4 @@
+<!-- Freelancer Dashboard -->
 <?php
 // Enable error reporting
 error_reporting(E_ALL);
@@ -25,13 +26,13 @@ $chat_stmt->execute();
 $chat_result = $chat_stmt->get_result();
 $total_chats = $chat_result->fetch_assoc()['total_chats'];
 
-// Get total orders (both as buyer and seller)
-$order_query = "SELECT COUNT(*) as total_orders FROM orders WHERE buyer_id = ? OR seller_id = ?";
+// Get total orders (only as seller/freelancer to match orders.php)
+$order_query = "SELECT COUNT(*) as total_orders FROM orders o JOIN gigs g ON o.gig_id = g.id WHERE g.user_id = ?";
 $order_stmt = $conn->prepare($order_query);
 if ($order_stmt === false) {
     die("Error preparing order query: " . $conn->error);
 }
-$order_stmt->bind_param("ii", $user_id, $user_id);
+$order_stmt->bind_param("i", $user_id);
 $order_stmt->execute();
 $order_result = $order_stmt->get_result();
 $total_orders = $order_result->fetch_assoc()['total_orders'];

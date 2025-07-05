@@ -91,46 +91,8 @@
             </section>
 
             
-            <footer class="footer">
-                <div class="footer-section">
-                    <div class="footer-links">
-                        <h3>PRODUCT</h3>
-                        <ul>
-                            <li><a href="#">Home</a></li><br>
-                            <li><a href="#">Services</a></li><br>
-                            <li><a href="#">About</a></li><br>
-                        </ul>
-                    </div>
-                    <div class="footer-links">
-                        <h3>SUPPORT</h3>
-                        <ul>
-                            <li><a href="#">How It Works</a></li><br>
-                            <li><a href="#">Trust and Safety</a></li><br>
-                            <li><a href="#">Help Centre</a></li><br>
-                        </ul>
-                    </div>
-                    <div class="footer-links">
-                        <h3>RESOURCES</h3>
-                        <ul>
-                            <li><a href="#">Customer Sales</a></li><br>
-                            <li><a href="#">Business Cost</a></li><br>
-                            <li><a href="#">Help Centre</a></li><br>
-                        </ul>
-                    </div>
-                    <div class="footer-brand">
-                        <h3>HUNARWALI</h3>
-                        <p>Lorem Ipsum Content for Address</p>
-                        <div class="social-icons">
-                            <a href="#" class="fa fa-facebook"></a>
-                            <a href="#" class="fa fa-twitter"></a>
-                            <a href="#" class="fa fa-instagram"></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-bottom">
-                    <p>Copyright &copy; 2024 Hunarwali</p>
-                </div>
-        </footer>
+            <?php include '../footer/footer.php'; ?>
+
     </header>
     </body>
     </html>

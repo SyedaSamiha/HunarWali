@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final year project</title>
+    <link rel="stylesheet" href="style .css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+</head>
+<body>
+    <body>
+        <header>
+            <div class="navbar">
+                <div class="nav_logo">
+                    <div class="logo">
+                        <a href="#">
+                            <img src="image-removebg-preview.png" alt="Logo">
+                        </a>
+                    </div>
+                </div>
+                <ul class="nav-content">
+                    <li><a href="/Home page/indes.html">HOME</a></li>
+                    <li><a href="/Services/services.html">SERVICES</a></li>
+                    <li><a href="#">HIRE</a></li>
+                    <li><a href="/registration/registration.html">REGISTER</a></li>
+                    <li><a href="/Login/index.html">LOGIN</a></li>
+                </ul>
+                <a href="/Contact us/contact.html">  <button class="nav-content" id="contact-btn"> CONTACT US!</button></a>
+            </div>
+
+
+
+    <section class="rating-review">
+        <h1 style="color: #8a3342;font-size: 30px;">RATING AND REVIEW</h1>
+        <div class="container">
+            <div class="text">
+                
+                <p style="font-size: 25px;">
+                    WHEN LEAVING A REVIEW OR A COMMENT ON A REVIEW, PLEASE REMAIN RESPECTFUL AND PROFESSIONAL 
+                    IN ORDER TO POSITIVELY REPRESENT YOUR BUSINESS. REMEMBER, YOUR COMMUNICATION WILL BE VISIBLE TO POTENTIAL BUYERS.
+                </p>
+            </div>
+            <div class="image">
+                <img src="image-removebg-preview (3).png" alt="Rating and Review">
+            </div>
+        </div>
+    
+        <!-- Button Centered Below -->
+        <div class="button-container">
+            <a href="/Rating and review form/Reviewform.html"><button class="review-btn">REVIEW FORM</button></a>
+        </div>
+    </section>
+
+
+
+
+
+            <?php include '../footer/footer.php'; ?>
+            <script src="script.js"></script>
+        </header>
+    </body>
+    </html>

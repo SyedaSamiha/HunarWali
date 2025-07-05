@@ -207,6 +207,42 @@ $is_buyer = ($order['buyer_id'] == $user_id);
         </div>
     </div>
 
+    <!-- Update Status (for freelancers only) -->
+    <?php if ($is_freelancer && strtolower($order['status']) !== 'completed' && strtolower($order['status']) !== 'cancelled'): ?>
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-edit me-2"></i>Update Order Status</h5>
+                        <form id="updateStatusForm">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="newStatus" class="form-label">New Status</label>
+                                    <select class="form-select" id="newStatus" name="newStatus" required>
+                                        <?php if (strtolower($order['status']) === 'pending'): ?>
+                                            <option value="in_progress">In Progress</option>
+                                            <option value="completed">Completed</option>
+                                        <?php elseif (strtolower($order['status']) === 'in_progress'): ?>
+                                            <option value="completed">Completed</option>
+                                        <?php endif; ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-8">
+                                    <label for="statusDescription" class="form-label">Description</label>
+                                    <textarea class="form-control" id="statusDescription" name="statusDescription" rows="2" placeholder="Add a description for this status update..." required></textarea>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>Update Status
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
 </div>
 
 <style>
